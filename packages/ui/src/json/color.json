@@ -1,0 +1,556 @@
+{
+    "id": "6:667",
+    "name": "Color",
+    "type": "FRAME",
+    "scrollBehavior": "SCROLLS",
+    "blendMode": "PASS_THROUGH",
+    "children": [
+        {
+            "name": "Rectangle 596",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9215686321258545,
+                        "g": 0.9843137264251709,
+                        "b": 0.9333333373069763,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 102",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.237951397895813,
+                        "g": 0.6416666507720947,
+                        "b": 0.31869447231292725,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 104",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.16862745583057404,
+                        "g": 0.5411764979362488,
+                        "b": 0.24313725531101227,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "MainGreen_light",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9215686321258545,
+                        "g": 0.9843137264251709,
+                        "b": 0.9333333373069763,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 110",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.07058823853731155,
+                        "g": 0.11372549086809158,
+                        "b": 0.18039216101169586,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 111",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.13725490868091583,
+                        "g": 0.18039216101169586,
+                        "b": 0.250980406999588,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 591",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.2085416615009308,
+                        "g": 0.25466829538345337,
+                        "b": 0.32499998807907104,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 116",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.3182986378669739,
+                        "g": 0.36264586448669434,
+                        "b": 0.42916667461395264,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 117",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.40784314274787903,
+                        "g": 0.45490196347236633,
+                        "b": 0.5254902243614197,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 118",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.4968055486679077,
+                        "g": 0.5409793257713318,
+                        "b": 0.6083333492279053,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 122",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.6196078658103943,
+                        "g": 0.6509804129600525,
+                        "b": 0.7058823704719543,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 123",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.7529411911964417,
+                        "g": 0.7803921699523926,
+                        "b": 0.8235294222831726,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 124",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.843137264251709,
+                        "g": 0.8588235378265381,
+                        "b": 0.886274516582489,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 129",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9019607901573181,
+                        "g": 0.9137254953384399,
+                        "b": 0.9333333373069763,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 130",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9505555033683777,
+                        "g": 0.9565971493721008,
+                        "b": 0.9666666388511658,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 598",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9505555033683777,
+                        "g": 0.9565971493721008,
+                        "b": 0.9666666388511658,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 600",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.4968055486679077,
+                        "g": 0.5409793257713318,
+                        "b": 0.6083333492279053,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 145",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9751562476158142,
+                        "g": 0.9800453186035156,
+                        "b": 0.987500011920929,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 597",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9751562476158142,
+                        "g": 0.9800453186035156,
+                        "b": 0.987500011920929,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 601",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9019607901573181,
+                        "g": 0.9137254953384399,
+                        "b": 0.9333333373069763,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 603",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.843137264251709,
+                        "g": 0.8588235378265381,
+                        "b": 0.886274516582489,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 140",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 1,
+                        "g": 0.9607843160629272,
+                        "b": 0.9607843160629272,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 141",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9411764740943909,
+                        "g": 0.24313725531101227,
+                        "b": 0.24313725531101227,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 142",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.7882353067398071,
+                        "g": 0.16470588743686676,
+                        "b": 0.16470588743686676,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 204",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 1,
+                        "g": 0.9764705896377563,
+                        "b": 0.8588235378265381,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 602",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 1,
+                        "g": 0.9764705896377563,
+                        "b": 0.8588235378265381,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 205",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9750000238418579,
+                        "g": 0.7344714403152466,
+                        "b": 0,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 206",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9411764740943909,
+                        "g": 0.5490196347236633,
+                        "b": 0,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 186",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.9019607901573181,
+                        "g": 0.9882352948188782,
+                        "b": 0.9607843160629272,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 187",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.07058823853731155,
+                        "g": 0.7215686440467834,
+                        "b": 0.5254902243614197,
+                        "a": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rectangle 188",
+            "type": "VECTOR",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0.0313725508749485,
+                        "g": 0.49803921580314636,
+                        "b": 0.35686275362968445,
+                        "a": 1
+                    }
+                }
+            ]
+        }
+    ],
+    "absoluteBoundingBox": {
+        "x": -678,
+        "y": -958,
+        "width": 1055,
+        "height": 3252
+    },
+    "absoluteRenderBounds": {
+        "x": -678,
+        "y": -958,
+        "width": 1055,
+        "height": 3252
+    },
+    "constraints": {
+        "vertical": "TOP",
+        "horizontal": "LEFT"
+    },
+    "clipsContent": true,
+    "background": [
+        {
+            "blendMode": "NORMAL",
+            "type": "SOLID",
+            "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+            }
+        }
+    ],
+    "fills": [
+        {
+            "blendMode": "NORMAL",
+            "type": "SOLID",
+            "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+            }
+        }
+    ],
+    "strokes": [],
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "backgroundColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+    },
+    "effects": []
+}

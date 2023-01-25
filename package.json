@@ -9,8 +9,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "turbo run lint --parallel",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "start:ui": "turbo run start --parallel --filter=ui --include-dependencies"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

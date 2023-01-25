@@ -1,5 +1,10 @@
 {
   "extends": "tsconfig/react-library.json",
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
 }
