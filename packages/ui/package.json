@@ -14,12 +14,12 @@
         "eslint": "^7.32.0",
         "eslint-config-custom": "*",
         "react": "^18.2.0",
+        "ts-node": "^10.9.1",
         "tsconfig": "*",
         "typescript": "^4.5.2"
     },
     "dependencies": {
         "axios": "^1.2.4",
-        "path": "^0.12.7",
-        "ts-node": "^10.9.1"
+        "path": "^0.12.7"
     }
 }
