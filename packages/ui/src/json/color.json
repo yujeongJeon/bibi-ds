@@ -1,182 +1,32 @@
 {
-    "BACKGROUND_POSITIVE": {
-        "r": 235,
-        "g": 251,
-        "b": 238,
-        "a": 1
-    },
-    "MAINGREEN_DEFAULT": {
-        "r": 61,
-        "g": 164,
-        "b": 81,
-        "a": 1
-    },
-    "MAINGREEN_DARK": {
-        "r": 43,
-        "g": 138,
-        "b": 62,
-        "a": 1
-    },
-    "MAINGREEN_LIGHT": {
-        "r": 235,
-        "g": 251,
-        "b": 238,
-        "a": 1
-    },
-    "GRAY_10": {
-        "r": 18,
-        "g": 29,
-        "b": 46,
-        "a": 1
-    },
-    "GRAY_9": {
-        "r": 35,
-        "g": 46,
-        "b": 64,
-        "a": 1
-    },
-    "GRAY_8": {
-        "r": 53,
-        "g": 65,
-        "b": 83,
-        "a": 1
-    },
-    "GRAY_7": {
-        "r": 81,
-        "g": 92,
-        "b": 109,
-        "a": 1
-    },
-    "GRAY_6": {
-        "r": 104,
-        "g": 116,
-        "b": 134,
-        "a": 1
-    },
-    "GRAY_5": {
-        "r": 127,
-        "g": 138,
-        "b": 155,
-        "a": 1
-    },
-    "GRAY_4": {
-        "r": 158,
-        "g": 166,
-        "b": 180,
-        "a": 1
-    },
-    "GRAY_3": {
-        "r": 192,
-        "g": 199,
-        "b": 210,
-        "a": 1
-    },
-    "GRAY_2": {
-        "r": 215,
-        "g": 219,
-        "b": 226,
-        "a": 1
-    },
-    "GRAY_1": {
-        "r": 230,
-        "g": 233,
-        "b": 238,
-        "a": 1
-    },
-    "GRAY_0.5": {
-        "r": 242,
-        "g": 244,
-        "b": 246,
-        "a": 1
-    },
-    "BACKGROUND_SECONDARY": {
-        "r": 242,
-        "g": 244,
-        "b": 246,
-        "a": 1
-    },
-    "BORDER_INVERSE": {
-        "r": 127,
-        "g": 138,
-        "b": 155,
-        "a": 1
-    },
-    "GRAY_0.1": {
-        "r": 249,
-        "g": 250,
-        "b": 252,
-        "a": 1
-    },
-    "BACKGROUND_PRIMARY": {
-        "r": 249,
-        "g": 250,
-        "b": 252,
-        "a": 1
-    },
-    "BORDER_PRIMARY": {
-        "r": 230,
-        "g": 233,
-        "b": 238,
-        "a": 1
-    },
-    "BORDER_SECONDARY": {
-        "r": 215,
-        "g": 219,
-        "b": 226,
-        "a": 1
-    },
-    "RED_LIGHT": {
-        "r": 255,
-        "g": 245,
-        "b": 245,
-        "a": 1
-    },
-    "RED_DEFAULT": {
-        "r": 240,
-        "g": 62,
-        "b": 62,
-        "a": 1
-    },
-    "RED_DARK": {
-        "r": 201,
-        "g": 42,
-        "b": 42,
-        "a": 1
-    },
-    "MAINYELLOW_LIGHT": {
-        "r": 255,
-        "g": 249,
-        "b": 219,
-        "a": 1
-    },
-    "MAINYELLOW_DEFAULT": {
-        "r": 249,
-        "g": 187,
-        "b": 0,
-        "a": 1
-    },
-    "MAINYELLOW_DARK": {
-        "r": 240,
-        "g": 140,
-        "b": 0,
-        "a": 1
-    },
-    "TEAL_LIGHT": {
-        "r": 230,
-        "g": 252,
-        "b": 245,
-        "a": 1
-    },
-    "TEAL_DEFAULT": {
-        "r": 18,
-        "g": 184,
-        "b": 134,
-        "a": 1
-    },
-    "TEAL_DARK": {
-        "r": 8,
-        "g": 127,
-        "b": 91,
-        "a": 1
-    }
+    "BACKGROUND_POSITIVE": "#ebfbee",
+    "MAINGREEN_DEFAULT": "#3da451",
+    "MAINGREEN_DARK": "#2b8a3e",
+    "MAINGREEN_LIGHT": "#ebfbee",
+    "GRAY_10": "#121d2e",
+    "GRAY_9": "#232e40",
+    "GRAY_8": "#354153",
+    "GRAY_7": "#515c6d",
+    "GRAY_6": "#687486",
+    "GRAY_5": "#7f8a9b",
+    "GRAY_4": "#9ea6b4",
+    "GRAY_3": "#c0c7d2",
+    "GRAY_2": "#d7dbe2",
+    "GRAY_1": "#e6e9ee",
+    "GRAY_0.5": "#f2f4f6",
+    "BACKGROUND_SECONDARY": "#f2f4f6",
+    "BORDER_INVERSE": "#7f8a9b",
+    "GRAY_0.1": "#f9fafc",
+    "BACKGROUND_PRIMARY": "#f9fafc",
+    "BORDER_PRIMARY": "#e6e9ee",
+    "BORDER_SECONDARY": "#d7dbe2",
+    "RED_LIGHT": "#fff5f5",
+    "RED_DEFAULT": "#f03e3e",
+    "RED_DARK": "#c92a2a",
+    "MAINYELLOW_LIGHT": "#fff9db",
+    "MAINYELLOW_DEFAULT": "#f9bb00",
+    "MAINYELLOW_DARK": "#f08c00",
+    "TEAL_LIGHT": "#e6fcf5",
+    "TEAL_DEFAULT": "#12b886",
+    "TEAL_DARK": "#087f5b"
 }

@@ -10,7 +10,11 @@ export const camelToSnakeCase = (str: string) =>
               .slice(1)
               .toUpperCase()
 
-export const getRgbaValue = (color: TColor): TColor =>
+export const normalizeToHex = (colorNumber: number) => Math.round(colorNumber * 255)
+
+export const percentageToHex = (percentage: number) => normalizeToHex(percentage).toString(16).padStart(2, '0')
+
+export const percentageToRgba = (color: TColor): TColor =>
     Object.entries(color).reduce(
         (color, [key, value]) => ({
             ...color,
@@ -19,8 +23,16 @@ export const getRgbaValue = (color: TColor): TColor =>
                       [key]: value,
                   }
                 : {
-                      [key]: Math.round(value * 255),
+                      [key]: normalizeToHex(value),
                   }),
         }),
         {} as TColor,
     )
+
+export const rgbaToHex = (color: TColor) => {
+    const r = percentageToHex(color.r)
+    const g = percentageToHex(color.g)
+    const b = percentageToHex(color.b)
+
+    return `#${r}${g}${b}`
+}
