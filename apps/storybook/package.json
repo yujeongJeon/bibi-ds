@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint:fix": "eslint . --fix",
         "watch": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build": "build-storybook"
     },
     "author": "yujeongJeon",
     "license": "ISC",
