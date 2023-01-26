@@ -1,19 +1,6 @@
 // https://www.figma.com/developers/api#node-types
 
-export type TFigmaFrame = {
-    nodes: {
-        [key: string]: {
-            document: {
-                id: string
-                name: string
-                type: 'FRAME'
-                children: TFrameChildren[]
-            }
-        }
-    }
-}
-
-type TColor = {
+export type TColor = {
     r: number
     g: number
     b: number
@@ -44,18 +31,33 @@ type TTypeStyle = {
     lineHeightPx: number
 }
 
-export type TCommonFrameChildren = {
+export type TFigmaDocument = {
+    nodes: {
+        [key: string]: {
+            document: IFrame
+        }
+    }
+}
+
+export interface ICommon {
+    id: string
     name: string
-    type: 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET'
+    type: 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME'
     fills: TPaint[]
 }
 
-export type TVector = TCommonFrameChildren & {
+export interface IFrame extends ICommon {
+    type: 'FRAME'
+    children: TFrameChildren[]
+}
+
+export interface IVector extends ICommon {
     type: 'VECTOR'
 }
-export type TText = TCommonFrameChildren & {
+
+export interface IText extends ICommon {
     type: 'TEXT'
     style: TTypeStyle
 }
 
-export type TFrameChildren = TVector | TText
+export type TFrameChildren = ICommon

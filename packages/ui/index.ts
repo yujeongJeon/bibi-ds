@@ -1,8 +1,7 @@
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, COLOR_NODE_PARAM } from './src/configs/figma'
-import { TFigmaFrame, TFrameChildren } from './src/types/figma'
-
-type TFilteredChildren = Pick<TFrameChildren, 'name' | 'type' | 'fills'>
+import { TFigmaDocument, IFrame, TColor } from './src/types/figma'
+import { camelToSnakeCase, getRgbaValue } from './src/utils'
 
 async function main() {
     await updateFigmaFiles({
@@ -10,15 +9,24 @@ async function main() {
         fileName: 'color',
         params: COLOR_NODE_PARAM,
         transform(data) {
-            const figmaContent: TFigmaFrame = JSON.parse(data)
+            const figmaContent: TFigmaDocument = JSON.parse(data)
             const document = figmaContent.nodes[COLOR_NODE_ID].document
 
-            const children: TFilteredChildren[] = document.children
-                .filter(({ type }) => type === 'VECTOR')
-                .map(({ name, type, fills }) => ({ name, type, fills }))
-            document.children = children as TFrameChildren[]
+            const colorSet: Record<string, TColor> = document.children
+                .filter((children): children is IFrame => children.type === 'FRAME')
+                .map(({ name, children }) => ({
+                    name: camelToSnakeCase(name.replace(/\s+/, '')).toUpperCase(),
+                    colors: children.filter((child) => child.type === 'VECTOR')[0].fills[0].color,
+                }))
+                .reduce(
+                    (colorSet, { name, colors }) => ({
+                        ...colorSet,
+                        [name]: getRgbaValue(colors),
+                    }),
+                    {},
+                )
 
-            const content = JSON.parse(JSON.stringify(document))
+            const content = JSON.parse(JSON.stringify(colorSet))
             return content
         },
     })
