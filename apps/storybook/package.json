@@ -1,19 +1,35 @@
 {
-  "name": "storybook",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:fix": "eslint . --fix"
-  },
-  "author": "yujeongJeon",
-  "license": "ISC",
-  "dependencies": {
-    "eslint": "^8.32.0",
-    "eslint-config-custom": "^0.0.0",
-    "react": "^18.2.0",
-    "tsconfig": "^7.0.0",
-    "typescript": "^4.9.4"
-  }
+    "name": "storybook",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint:fix": "eslint . --fix",
+        "watch": "start-storybook -p 6006",
+        "build-storybook": "build-storybook"
+    },
+    "author": "yujeongJeon",
+    "license": "ISC",
+    "dependencies": {
+        "eslint": "^8.32.0",
+        "eslint-config-custom": "^0.0.0",
+        "react": "^18.2.0",
+        "storybook": "^6.5.16",
+        "tsconfig": "^7.0.0",
+        "typescript": "^4.9.4",
+        "ui": "*"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.12",
+        "@storybook/addon-actions": "^6.5.16",
+        "@storybook/addon-essentials": "^6.5.16",
+        "@storybook/addon-interactions": "^6.5.16",
+        "@storybook/addon-links": "^6.5.16",
+        "@storybook/builder-webpack4": "^6.5.16",
+        "@storybook/manager-webpack4": "^6.5.16",
+        "@storybook/react": "^6.5.16",
+        "@storybook/testing-library": "^0.0.13",
+        "babel-loader": "^8.3.0"
+    }
 }

@@ -13,6 +13,10 @@
         },
         "start": {
             "cache": false
+        },
+        "watch": {
+            "cache": false,
+            "persistent": true
         }
     }
 }

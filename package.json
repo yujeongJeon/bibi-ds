@@ -1,26 +1,27 @@
 {
-  "name": "bibi-ds",
-  "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint --parallel",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "start:ui": "turbo run start --parallel --filter=ui --include-dependencies"
-  },
-  "devDependencies": {
-    "eslint-config-custom": "*",
-    "prettier": "latest",
-    "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "dependencies": {},
-  "packageManager": "npm@8.1.2"
+    "name": "bibi-ds",
+    "version": "0.0.0",
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev --parallel",
+        "lint": "turbo run lint --parallel",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "start:ui": "turbo run start --parallel --filter=ui --include-dependencies",
+        "watch:storybook": "turbo run watch --filter=storybook --include-dependencies"
+    },
+    "devDependencies": {
+        "eslint-config-custom": "*",
+        "prettier": "latest",
+        "turbo": "latest"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "dependencies": {},
+    "packageManager": "npm@8.1.2"
 }
