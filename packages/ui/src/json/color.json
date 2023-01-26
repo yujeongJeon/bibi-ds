@@ -14,14 +14,14 @@
         "GRAY_0.1": "#f9fafc"
     },
     "BACKGROUND": {
-        "BACKGROUND_POSITIVE": "#ebfbee",
-        "BACKGROUND_SECONDARY": "#f2f4f6",
-        "BACKGROUND_PRIMARY": "#f9fafc"
+        "POSITIVE": "#ebfbee",
+        "SECONDARY": "#f2f4f6",
+        "PRIMARY": "#f9fafc"
     },
     "BORDER": {
-        "BORDER_INVERSE": "#7f8a9b",
-        "BORDER_PRIMARY": "#e6e9ee",
-        "BORDER_SECONDARY": "#d7dbe2"
+        "INVERSE": "#7f8a9b",
+        "PRIMARY": "#e6e9ee",
+        "SECONDARY": "#d7dbe2"
     },
     "BRAND": {
         "MAINGREEN_DEFAULT": "#3da451",

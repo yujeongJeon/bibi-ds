@@ -4,7 +4,7 @@ import { TFigmaDocument, IFrame } from './src/types/figma'
 import { camelToSnakeCase } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
 
-async function main() {
+async function setColor() {
     await updateFigmaFiles({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
@@ -13,18 +13,20 @@ async function main() {
             const figmaContent: TFigmaDocument = JSON.parse(data)
             const document = figmaContent.nodes[COLOR_NODE_ID].document
 
-            const colorSet: Record<string, string> = document.children
+            const colorSet: Record<string, Record<string, string>> = document.children
                 .filter((children): children is IFrame => children.type === 'FRAME') // Grayscale, Sub ...
                 .map(({ name, children }) => ({
                     name,
-                    children: children.filter((child): child is IFrame => child.type === 'FRAME'), // [Gray_10, Gray_9, ...]
+                    children: children.filter((child): child is IFrame => child.type === 'FRAME'), // [Gray_10, Gray_9, ...], [Red_light, ...]
                 }))
                 .reduce(
-                    (root, { name, children }) => ({
+                    (root, { name: rootName, children }) => ({
                         ...root,
-                        [name.toUpperCase()]: children
+                        [rootName.toUpperCase()]: children
                             .map(({ name, children }) => ({
-                                name: camelToSnakeCase(name.replace(/\s+/, '')).toUpperCase(),
+                                name: camelToSnakeCase(name.replace(/\s+/, ''), {
+                                    exclude: rootName,
+                                }).toUpperCase(),
                                 colors: children.filter((child) => child.type === 'VECTOR')[0].fills[0].color,
                             }))
                             .reduce(
@@ -44,4 +46,4 @@ async function main() {
     })
 }
 
-main()
+setColor()

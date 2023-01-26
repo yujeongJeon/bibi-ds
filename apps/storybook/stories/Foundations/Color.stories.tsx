@@ -14,7 +14,15 @@ const Rectangle = ({ color }) => (
             fontSize: '13px',
         }}
     >
-        {color}
+        <span
+            style={{
+                backgroundColor: '#fff',
+                padding: '2.5px 6px',
+                borderRadius: '2px',
+            }}
+        >
+            {color}
+        </span>
     </div>
 )
 
