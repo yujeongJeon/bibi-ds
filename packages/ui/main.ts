@@ -1,8 +1,12 @@
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, COLOR_NODE_PARAM } from './src/configs/figma'
-import { TFigmaDocument, IFrame } from './src/types/figma'
+import { TFigmaDocument, IFrame, ICommon } from './src/types/figma'
 import { camelToSnakeCase } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
+
+function isFrameInObject(children: ICommon): children is IFrame {
+    return children.type === 'FRAME'
+}
 
 async function setColor() {
     await updateFigmaFiles({
@@ -14,25 +18,25 @@ async function setColor() {
             const document = figmaContent.nodes[COLOR_NODE_ID].document
 
             const colorSet: Record<string, Record<string, string>> = document.children
-                .filter((children): children is IFrame => children.type === 'FRAME') // Grayscale, Sub ...
+                .filter(isFrameInObject) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
                     name,
-                    children: children.filter((child): child is IFrame => child.type === 'FRAME'), // [Gray_10, Gray_9, ...], [Red_light, ...]
+                    children: children.filter(isFrameInObject), // 2-depth : [Gray_10, Gray_9, ...]
                 }))
                 .reduce(
                     (root, { name: rootName, children }) => ({
                         ...root,
-                        [rootName.toUpperCase()]: children
+                        [rootName.toUpperCase()]: children // {GRAYSCALE: {GRAY_10: '#121d2e', ...}, ...}
                             .map(({ name, children }) => ({
-                                name: camelToSnakeCase(name.replace(/\s+/, ''), {
+                                name: camelToSnakeCase(name, {
                                     exclude: rootName,
                                 }).toUpperCase(),
-                                colors: children.filter((child) => child.type === 'VECTOR')[0].fills[0].color,
+                                colors: children.filter((child) => child.type === 'VECTOR')[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
                             }))
                             .reduce(
                                 (colorSet, { name, colors }) => ({
                                     ...colorSet,
-                                    [name]: rgbaToHex(colors),
+                                    [name]: rgbaToHex(colors), // rgba -> hex로 변환
                                 }),
                                 {},
                             ),

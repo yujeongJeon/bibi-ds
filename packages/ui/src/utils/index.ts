@@ -11,8 +11,9 @@ export const camelToSnakeCase = (
     opts?: {
         exclude: string
     },
-) =>
-    str.includes('_')
+) => {
+    str = str.replace(/\s+/, '')
+    return str.includes('_')
         ? deleteExcludeWord(str, opts?.exclude).toUpperCase()
         : deleteExcludeWord(str, opts?.exclude)
               .replace(/[A-Z]/g, (c) => {
@@ -20,3 +21,4 @@ export const camelToSnakeCase = (
               })
               .slice(1)
               .toUpperCase()
+}
