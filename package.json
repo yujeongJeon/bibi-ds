@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "init:storybook": "turbo run init --filter=storybook",
         "build": "turbo run build --filter=storybook",
         "dev": "turbo run dev --parallel",
         "lint": "turbo run lint --parallel",
@@ -17,10 +18,11 @@
     "devDependencies": {
         "eslint-config-custom": "*",
         "prettier": "latest",
-        "turbo": "latest"
+        "turbo": "latest",
+        "typescript": "^4.7.4"
     },
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=16.0.0"
     },
     "packageManager": "npm@8.1.2"
 }
