@@ -24,17 +24,22 @@ const updateFigmaFiles = async ({
     fileName: string
     transform<T extends IFigmaDocument>(data: string): any
 }) => {
-    const res = await axios.get<IFigmaDocument>(
-        `https://api.figma.com/v1/files/IjtwzoijQFoW2zEiO4N8BU/nodes?ids=${nodeId}`,
-        {
-            headers: {
-                'X-Figma-Token': 'figd_wth0TR24ae9NCzOVyvunK8SYdL4dAHas2hDAg4Cf',
+    try {
+        const res = await axios.get<IFigmaDocument>(
+            `https://api.figma.com/v1/files/IjtwzoijQFoW2zEiO4N8BU/nodes?ids=${nodeId}`,
+            {
+                headers: {
+                    'X-Figma-Token': 'figd_wth0TR24ae9NCzOVyvunK8SYdL4dAHas2hDAg4Cf',
+                },
+                transformResponse: [transform],
             },
-            transformResponse: [transform],
-        },
-    )
+        )
 
-    updateOrCreateFigmaFile(JSON.stringify(res.data, undefined, 4), fileName)
+        updateOrCreateFigmaFile(JSON.stringify(res.data, undefined, 4), fileName)
+    } catch (e) {
+        console.error(e)
+        throw e
+    }
 }
 
 export default updateFigmaFiles

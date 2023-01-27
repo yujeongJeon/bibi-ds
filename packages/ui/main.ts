@@ -5,6 +5,7 @@ import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
 import { IColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
 import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
+import { createSettledResponse } from './src/utils/promise'
 
 function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
     return children.type === 'FRAME'
@@ -73,5 +74,26 @@ async function setTypo() {
     })
 }
 
-setColor()
-setTypo()
+type TSetResponse = {
+    key: string
+    status: 'OK' | 'ERROR'
+}
+
+async function main() {
+    const results = createSettledResponse<TSetResponse, 'color' | 'typo'>(
+        await Promise.allSettled([
+            setColor()
+                .then((): TSetResponse => ({ status: 'OK', key: 'color' } as TSetResponse))
+                .catch((): TSetResponse => ({ status: 'ERROR', key: 'color' } as TSetResponse)),
+            setTypo()
+                .then(() => ({ status: 'OK', key: 'typo' } as TSetResponse))
+                .catch(() => ({ status: 'ERROR', key: 'typo' } as TSetResponse)),
+        ]),
+    )
+
+    Object.entries(results).forEach(([key, status]) =>
+        console.log(`${key}.json 업데이트에 ${status === 'OK' ? '성공' : '실패'}했습니다.`),
+    )
+}
+
+main()
