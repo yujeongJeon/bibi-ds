@@ -20,7 +20,7 @@ type TPaint = {
     color: TColor
 }
 
-type TTypeStyle = {
+export type TTypeStyle = {
     fontFamily: string
     fontPostScriptName: string
     fontWeight: number
