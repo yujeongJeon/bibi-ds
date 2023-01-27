@@ -33,4 +33,4 @@ jobs:
               with:
                   branch: gh-pages
                   folder: docs
-                  token: ${{ secrets.ACTION_TOKEN }}
+                  token: GITHUB_TOKEN
