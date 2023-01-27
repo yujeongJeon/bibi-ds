@@ -1,9 +1,10 @@
 import updateFigmaFiles from './src/apis/updateFile'
-import { COLOR_NODE_ID } from './src/configs/figma'
-import { IFrame, ICommon } from './src/types/figma'
-import { camelToSnakeCase } from './src/utils'
+import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
+import { IFrame, ICommon, IText } from './src/types/figma'
+import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
-import { IColorSetFrame, TColorFigmaDocument, TColorReturnType, TColorSetName } from './src/types/color'
+import { IColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
+import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
 
 function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
     return children.type === 'FRAME'
@@ -50,4 +51,27 @@ async function setColor() {
     })
 }
 
+async function setTypo() {
+    await updateFigmaFiles({
+        nodeId: TYPO_NODE_ID,
+        fileName: 'typo',
+        transform<T extends TTypoFigmaDocument>(data: string) {
+            const figmaContent: T = JSON.parse(data)
+            const document = figmaContent.nodes[TYPO_NODE_ID].document
+            const usage = document.children.filter<TUsageFrame>(isFrameInObject)[0].children
+
+            return usage.filter<TTypoFrame>(isFrameInObject).reduce(
+                (obj, { name, children }) => ({
+                    ...obj,
+                    [toSnakeCaseBySeperator(name)]: children.filter<IText>(
+                        (child): child is IText => child.type === 'TEXT',
+                    )[0].style,
+                }),
+                {},
+            )
+        },
+    })
+}
+
 setColor()
+setTypo()

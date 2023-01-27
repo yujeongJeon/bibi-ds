@@ -48,9 +48,10 @@ export interface ICommon<T extends string = string> {
     fills: TPaint[]
 }
 
-export interface IFrame<Name extends string = string, NameSet extends string = string> extends ICommon<Name> {
+export interface IFrame<Name extends string = string, NameSet extends string = string, Nested extends string = string>
+    extends ICommon<Name> {
     type: 'FRAME'
-    children: (ICommon | IFrame<NameSet>)[]
+    children: (ICommon | IFrame<NameSet, Nested>)[]
 }
 
 export interface IVector<Name extends string = string> extends ICommon<Name> {
