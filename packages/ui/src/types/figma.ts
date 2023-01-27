@@ -31,33 +31,33 @@ type TTypeStyle = {
     lineHeightPx: number
 }
 
-export type TFigmaDocument = {
+export interface IFigmaDocument<T extends IFrame = IFrame> {
     nodes: {
         [key: string]: {
-            document: IFrame
+            document: T
         }
     }
 }
 
-export interface ICommon {
+export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME'
+
+export interface ICommon<T extends string = string> {
     id: string
-    name: string
-    type: 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME'
+    name: T
+    type: TNodeType
     fills: TPaint[]
 }
 
-export interface IFrame extends ICommon {
+export interface IFrame<Name extends string = string, NameSet extends string = string> extends ICommon<Name> {
     type: 'FRAME'
-    children: TFrameChildren[]
+    children: (ICommon | IFrame<NameSet>)[]
 }
 
-export interface IVector extends ICommon {
+export interface IVector<Name extends string = string> extends ICommon<Name> {
     type: 'VECTOR'
 }
 
-export interface IText extends ICommon {
+export interface IText<Name extends string = string> extends ICommon<Name> {
     type: 'TEXT'
     style: TTypeStyle
 }
-
-export type TFrameChildren = ICommon

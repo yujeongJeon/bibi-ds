@@ -1,5 +1,5 @@
 import React from 'react'
-import { colorSet } from 'ui'
+import { COLORS } from 'ui'
 
 const Rectangle = ({ color }) => (
     <div
@@ -70,7 +70,7 @@ const List = ({ value }) => (
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const Color = () => (
     <>
-        {Object.entries(colorSet)
+        {Object.entries(COLORS)
             .sort(([key1], [key2]) => key1.split('_')[0].localeCompare(key2.split('_')[0]))
             .map(([key, value]) => (
                 <div

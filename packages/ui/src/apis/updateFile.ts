@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import path from 'path'
 import axios from 'axios'
-import type { TFigmaDocument } from '../types/figma'
+import type { IFigmaDocument } from '../types/figma'
 
 const updateOrCreateFile = (targetFilePath: string, content: string) => {
     fs.writeFileSync(targetFilePath, content, {
@@ -22,9 +22,9 @@ const updateFigmaFiles = async ({
 }: {
     nodeId: string
     fileName: string
-    transform(data: any): any
+    transform<T extends IFigmaDocument>(data: string): any
 }) => {
-    const res = await axios.get<TFigmaDocument>(
+    const res = await axios.get<IFigmaDocument>(
         `https://api.figma.com/v1/files/IjtwzoijQFoW2zEiO4N8BU/nodes?ids=${nodeId}`,
         {
             headers: {
