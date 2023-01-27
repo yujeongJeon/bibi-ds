@@ -24,8 +24,7 @@ jobs:
 
             - name: Install and Build
               run: |
-                  npm ci --legacy-peer-deps
-                  cd apps/storybook & npm ci --legacy-peer-deps
+                  npm ci
                   npm run build
 
             - name: Deploy
