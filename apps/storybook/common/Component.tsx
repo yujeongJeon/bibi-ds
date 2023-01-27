@@ -5,7 +5,7 @@ type TFlexProps = {
     alignItems?: CSSProperties['alignItems']
 }
 
-const Flex = styled.div<TFlexProps>`
+export const Flex = styled.div<TFlexProps>`
     ${({ justifyContent, alignItems }) => css`
         display: flex;
         justify-content: ${justifyContent || 'center'};
@@ -21,11 +21,15 @@ const Column = styled(Flex)`
     flex-direction: column;
 `
 
-const InlineColumn = styled.div`
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+const InlineColumn = styled.div<TFlexProps>`
+    ${({ justifyContent, alignItems }) => css`
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        justify-content: ${justifyContent || 'center'};
+        align-items: ${alignItems || 'center'};
+    `}
 `
 
 export { Row, Column, InlineColumn }

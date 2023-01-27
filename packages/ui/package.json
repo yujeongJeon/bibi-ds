@@ -9,12 +9,9 @@
         "start": "npx ts-node ./main.ts"
     },
     "devDependencies": {
-        "@types/react": "^17.0.37",
-        "@types/react-dom": "^17.0.11",
         "@types/styled-components": "^5.1.26",
         "eslint": "^7.32.0",
         "eslint-config-custom": "*",
-        "react": "^18.2.0",
         "styled-components": "^5.3.6",
         "ts-node": "^10.9.1",
         "tsconfig": "*"
@@ -24,8 +21,6 @@
         "path": "^0.12.7"
     },
     "peerDependencies": {
-        "react": ">= 17",
-        "react-dom": ">= 17",
         "styled-components": ">= 5"
     }
 }

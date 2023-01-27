@@ -8,7 +8,7 @@
         "lint:fix": "eslint . --fix",
         "watch": "start-storybook -p 6006",
         "build": "build-storybook -o ../../docs",
-        "init": "sb init"
+        "init": "sb init --skip-install"
     },
     "author": "yujeongJeon",
     "license": "ISC",
@@ -29,12 +29,9 @@
         "@storybook/manager-webpack4": "^6.5.16",
         "@storybook/react": "^6.5.16",
         "@storybook/testing-library": "^0.0.13",
-        "@types/react": "^18.0.27",
-        "@types/react-dom": "^18.0.10",
         "@types/styled-components": "^5.1.26",
         "babel-loader": "^8.3.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react-docgen-typescript": "^2.2.2",
         "storybook": "^6.5.16",
         "styled-components": "^5.3.6"
     }

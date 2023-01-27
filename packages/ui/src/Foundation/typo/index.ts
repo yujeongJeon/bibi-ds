@@ -19,7 +19,7 @@ const TYPOS = Object.entries<TTypeStyle>(typoSet).reduce(
             font-family: ${fontFamily};
             font-weight: ${fontWeight};
             font-size: ${fontSize}px;
-            line-height: ${lineHeightPx}px;
+            line-height: ${Math.round(lineHeightPx)}px;
         `
         return result
     },
