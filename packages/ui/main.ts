@@ -1,5 +1,5 @@
 import updateFigmaFiles from './src/apis/updateFile'
-import { COLOR_NODE_ID, COLOR_NODE_PARAM } from './src/configs/figma'
+import { COLOR_NODE_ID } from './src/configs/figma'
 import { TFigmaDocument, IFrame, ICommon } from './src/types/figma'
 import { camelToSnakeCase } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
@@ -12,7 +12,6 @@ async function setColor() {
     await updateFigmaFiles({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
-        params: COLOR_NODE_PARAM,
         transform(data) {
             const figmaContent: TFigmaDocument = JSON.parse(data)
             const document = figmaContent.nodes[COLOR_NODE_ID].document
