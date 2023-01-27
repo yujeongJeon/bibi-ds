@@ -2,7 +2,7 @@ import { IFigmaDocument, IFrame } from './figma'
 
 export type TColorSetName = 'Grayscale' | 'Sub' | 'Brand' | 'Background' | 'Border'
 
-export interface IColorSetFrame extends IFrame<TColorSetName> {}
+export type TColorSetFrame = IFrame<TColorSetName>
 
 export type TColorFigmaDocument = IFigmaDocument<IFrame<'Color', TColorSetName>>
 

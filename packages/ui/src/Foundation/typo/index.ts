@@ -1,7 +1,8 @@
+import { css, FlattenSimpleInterpolation } from 'styled-components'
+
 import typoSet from '../../json/typo.json'
 import { TTypeStyle } from '../../types/figma'
 import { TTypoKey } from '../../types/typo'
-import { css, FlattenSimpleInterpolation } from 'styled-components'
 
 const base = css`
     font-style: normal;

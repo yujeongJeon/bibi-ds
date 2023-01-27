@@ -23,7 +23,7 @@ export const camelToSnakeCase = (
               .toUpperCase()
 }
 
-export const toSnakeCaseBySeperator = (str: string, seperator: string = '/') =>
+export const toSnakeCaseBySeperator = (str: string, seperator = '/') =>
     str
         .split(seperator)
         .map((str) => str.toUpperCase())

@@ -1,10 +1,11 @@
+/* eslint-disable import/no-unresolved */
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
+import { TColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
 import { IFrame, ICommon, IText } from './src/types/figma'
+import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
-import { IColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
-import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { createSettledResponse } from './src/utils/promise'
 
 function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
@@ -20,7 +21,7 @@ async function setColor() {
             const document = figmaContent.nodes[COLOR_NODE_ID].document
 
             const colorSet: TColorReturnType = document.children
-                .filter<IColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
+                .filter<TColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
                     name,
                     children: children.filter(isFrameInObject), // 2-depth : [Gray_10, Gray_9, ...]
