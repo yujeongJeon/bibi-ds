@@ -1,3 +1,5 @@
 import colorSet from '../../json/color.json'
 
-export default colorSet
+const COLORS = colorSet
+
+export default COLORS

@@ -31,3 +31,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+*_ex.json
+
+.vscode

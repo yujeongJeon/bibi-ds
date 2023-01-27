@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "init:storybook": "turbo run init --filter=storybook",
         "build": "turbo run build --filter=storybook",
         "dev": "turbo run dev --parallel",
         "lint": "turbo run lint --parallel",
@@ -15,12 +16,21 @@
         "watch:storybook": "turbo run watch --filter=storybook --include-dependencies"
     },
     "devDependencies": {
+        "@types/react": "^18.0.27",
+        "@types/react-dom": "^18.0.10",
         "eslint-config-custom": "*",
         "prettier": "latest",
-        "turbo": "latest"
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "turbo": "latest",
+        "typescript": "^4.7.4"
     },
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=16.0.0"
     },
-    "packageManager": "npm@8.1.2"
+    "packageManager": "npm@8.1.2",
+    "peerDependencies": {
+        "react": ">= 17",
+        "react-dom": ">= 17"
+    }
 }

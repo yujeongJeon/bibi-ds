@@ -15,8 +15,8 @@
             "cache": false
         },
         "watch": {
-            "cache": false,
-            "persistent": true
-        }
+            "cache": false
+        },
+        "init": {}
     }
 }

@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import path from 'path'
 import axios from 'axios'
-import type { TFigmaDocument } from '../types/figma'
+import type { IFigmaDocument } from '../types/figma'
 
 const updateOrCreateFile = (targetFilePath: string, content: string) => {
     fs.writeFileSync(targetFilePath, content, {
@@ -18,25 +18,28 @@ const updateOrCreateFigmaFile = (content: string, fileName: string) => {
 const updateFigmaFiles = async ({
     nodeId,
     fileName,
-    params,
     transform,
 }: {
     nodeId: string
     fileName: string
-    params: string
-    transform(data: any): any
+    transform<T extends IFigmaDocument>(data: string): any
 }) => {
-    const res = await axios.get<TFigmaDocument>(
-        `https://api.figma.com/v1/files/IjtwzoijQFoW2zEiO4N8BU/nodes?ids=${params}`,
-        {
-            headers: {
-                'X-Figma-Token': 'figd_wth0TR24ae9NCzOVyvunK8SYdL4dAHas2hDAg4Cf',
+    try {
+        const res = await axios.get<IFigmaDocument>(
+            `https://api.figma.com/v1/files/IjtwzoijQFoW2zEiO4N8BU/nodes?ids=${nodeId}`,
+            {
+                headers: {
+                    'X-Figma-Token': 'figd_wth0TR24ae9NCzOVyvunK8SYdL4dAHas2hDAg4Cf',
+                },
+                transformResponse: [transform],
             },
-            transformResponse: [transform],
-        },
-    )
+        )
 
-    updateOrCreateFigmaFile(JSON.stringify(res.data, undefined, 4), fileName)
+        updateOrCreateFigmaFile(JSON.stringify(res.data, undefined, 4), fileName)
+    } catch (e) {
+        console.error(e)
+        throw e
+    }
 }
 
 export default updateFigmaFiles

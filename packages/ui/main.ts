@@ -1,10 +1,14 @@
+/* eslint-disable import/no-unresolved */
 import updateFigmaFiles from './src/apis/updateFile'
-import { COLOR_NODE_ID, COLOR_NODE_PARAM } from './src/configs/figma'
-import { TFigmaDocument, IFrame, ICommon } from './src/types/figma'
-import { camelToSnakeCase } from './src/utils'
+import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
+import { TColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
+import { IFrame, ICommon, IText } from './src/types/figma'
+import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
+import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
+import { createSettledResponse } from './src/utils/promise'
 
-function isFrameInObject(children: ICommon): children is IFrame {
+function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
     return children.type === 'FRAME'
 }
 
@@ -12,13 +16,12 @@ async function setColor() {
     await updateFigmaFiles({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
-        params: COLOR_NODE_PARAM,
-        transform(data) {
-            const figmaContent: TFigmaDocument = JSON.parse(data)
+        transform: function transform<T extends TColorFigmaDocument, R extends TColorReturnType>(data: string): R {
+            const figmaContent: T = JSON.parse(data)
             const document = figmaContent.nodes[COLOR_NODE_ID].document
 
-            const colorSet: Record<string, Record<string, string>> = document.children
-                .filter(isFrameInObject) // 1-depth : Sub, Grayscale, ...
+            const colorSet: TColorReturnType = document.children
+                .filter<TColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
                     name,
                     children: children.filter(isFrameInObject), // 2-depth : [Gray_10, Gray_9, ...]
@@ -41,7 +44,7 @@ async function setColor() {
                                 {},
                             ),
                     }),
-                    {},
+                    {} as TColorReturnType,
                 )
 
             const content = JSON.parse(JSON.stringify(colorSet))
@@ -50,4 +53,48 @@ async function setColor() {
     })
 }
 
-setColor()
+async function setTypo() {
+    await updateFigmaFiles({
+        nodeId: TYPO_NODE_ID,
+        fileName: 'typo',
+        transform<T extends TTypoFigmaDocument>(data: string) {
+            const figmaContent: T = JSON.parse(data)
+            const document = figmaContent.nodes[TYPO_NODE_ID].document
+            const usage = document.children.filter<TUsageFrame>(isFrameInObject)[0].children
+
+            return usage.filter<TTypoFrame>(isFrameInObject).reduce(
+                (obj, { name, children }) => ({
+                    ...obj,
+                    [toSnakeCaseBySeperator(name)]: children.filter<IText>(
+                        (child): child is IText => child.type === 'TEXT',
+                    )[0].style,
+                }),
+                {},
+            )
+        },
+    })
+}
+
+type TSetResponse = {
+    key: string
+    status: 'OK' | 'ERROR'
+}
+
+async function main() {
+    const results = createSettledResponse<TSetResponse, 'color' | 'typo'>(
+        await Promise.allSettled([
+            setColor()
+                .then((): TSetResponse => ({ status: 'OK', key: 'color' } as TSetResponse))
+                .catch((): TSetResponse => ({ status: 'ERROR', key: 'color' } as TSetResponse)),
+            setTypo()
+                .then(() => ({ status: 'OK', key: 'typo' } as TSetResponse))
+                .catch(() => ({ status: 'ERROR', key: 'typo' } as TSetResponse)),
+        ]),
+    )
+
+    Object.entries(results).forEach(([key, status]) =>
+        console.log(`${key}.json 업데이트에 ${status === 'OK' ? '성공' : '실패'}했습니다.`),
+    )
+}
+
+main()
