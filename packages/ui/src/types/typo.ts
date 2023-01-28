@@ -11,4 +11,4 @@ export type TUsageFrame = IFrame<'Usage', TPossibleTypoName>
 
 export type TTypoFrame = IFrame<TPossibleTypoName>
 
-export type TTypoFigmaDocument = IFigmaDocument<IFrame<'Font', 'Usage', TPossibleTypoName>>
+export type TTypoDocumentFrame = IFrame<'Font', 'Usage', TPossibleTypoName>
