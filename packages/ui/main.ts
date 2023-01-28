@@ -1,9 +1,9 @@
 /* eslint-disable import/no-unresolved */
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
-import { TColorSetFrame, TColorFigmaDocument, TColorReturnType } from './src/types/color'
+import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
 import { IFrame, ICommon, IText } from './src/types/figma'
-import { TTypoFigmaDocument, TTypoFrame, TUsageFrame } from './src/types/typo'
+import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
 import { createSettledResponse } from './src/utils/promise'
@@ -16,10 +16,7 @@ async function setColor() {
     await updateFigmaFiles({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
-        transform: function transform<T extends TColorFigmaDocument, R extends TColorReturnType>(data: string): R {
-            const figmaContent: T = JSON.parse(data)
-            const document = figmaContent.nodes[COLOR_NODE_ID].document
-
+        transform: function transform(document: TColorDocumentFrame): TColorReturnType {
             const colorSet: TColorReturnType = document.children
                 .filter<TColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
@@ -57,9 +54,7 @@ async function setTypo() {
     await updateFigmaFiles({
         nodeId: TYPO_NODE_ID,
         fileName: 'typo',
-        transform<T extends TTypoFigmaDocument>(data: string) {
-            const figmaContent: T = JSON.parse(data)
-            const document = figmaContent.nodes[TYPO_NODE_ID].document
+        transform(document: TTypoDocumentFrame) {
             const usage = document.children.filter<TUsageFrame>(isFrameInObject)[0].children
 
             return usage.filter<TTypoFrame>(isFrameInObject).reduce(
