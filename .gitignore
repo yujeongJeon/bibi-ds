@@ -35,3 +35,5 @@ yarn-error.log*
 *_ex.json
 
 .vscode
+
+.env
