@@ -1,12 +1,13 @@
 /* eslint-disable import/no-unresolved */
 import updateFigmaFiles from './src/apis/updateFile'
-import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
+import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
 import { IText } from './src/types/figma'
+import { TIconDocumentFrame, TSizeGroup, TSizeReturnType } from './src/types/icon'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
-import { isFrame } from './src/utils/figma'
+import { isComponent, isFrame, isGroup } from './src/utils/figma'
 import { createSettledResponse } from './src/utils/promise'
 
 async function setColor() {
@@ -67,6 +68,39 @@ async function setTypo() {
     })
 }
 
+async function setIcon() {
+    await updateFigmaFiles({
+        nodeId: ICON_NODE_ID,
+        fileName: 'size',
+        transform(document: TIconDocumentFrame): TSizeReturnType {
+            const size = document.children.filter<TSizeGroup>(
+                (child): child is TSizeGroup => isGroup<TSizeGroup>(child) || child.name === 'Size',
+            )[0]
+
+            const sizeSet = size.children
+                .filter(isGroup)
+                .map(({ name, children }) => ({
+                    name,
+                    children: children.filter(isComponent)[0],
+                }))
+                .filter(({ children }) => !!children)
+                .reduce((result, { name, children }) => {
+                    const { width, height } = children.absoluteBoundingBox
+                    return {
+                        ...result,
+                        [name.toUpperCase()]: {
+                            width,
+                            height,
+                        },
+                    }
+                }, {} as TSizeReturnType)
+
+            const content: TSizeReturnType = JSON.parse(JSON.stringify(sizeSet))
+            return content
+        },
+    })
+}
+
 type TSetResponse = {
     key: string
     status: 'OK' | 'ERROR'
@@ -81,6 +115,9 @@ async function main() {
             setTypo()
                 .then(() => ({ status: 'OK', key: 'typo' } as TSetResponse))
                 .catch(() => ({ status: 'ERROR', key: 'typo' } as TSetResponse)),
+            setIcon()
+                .then(() => ({ status: 'OK', key: 'icon' } as TSetResponse))
+                .catch(() => ({ status: 'ERROR', key: 'icon' } as TSetResponse)),
         ]),
     )
 
