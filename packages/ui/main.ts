@@ -2,15 +2,12 @@
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
-import { IFrame, ICommon, IText } from './src/types/figma'
+import { IText } from './src/types/figma'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
+import { isFrame } from './src/utils/figma'
 import { createSettledResponse } from './src/utils/promise'
-
-function isFrame<T extends IFrame>(children: ICommon): children is T {
-    return children.type === 'FRAME'
-}
 
 async function setColor() {
     await updateFigmaFiles({
@@ -44,7 +41,7 @@ async function setColor() {
                     {} as TColorReturnType,
                 )
 
-            const content = JSON.parse(JSON.stringify(colorSet))
+            const content: TColorReturnType = JSON.parse(JSON.stringify(colorSet))
             return content
         },
     })
