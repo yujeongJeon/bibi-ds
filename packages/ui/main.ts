@@ -8,7 +8,7 @@ import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
 import { createSettledResponse } from './src/utils/promise'
 
-function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
+function isFrame<T extends IFrame>(children: ICommon): children is T {
     return children.type === 'FRAME'
 }
 
@@ -18,10 +18,10 @@ async function setColor() {
         fileName: 'color',
         transform: function transform(document: TColorDocumentFrame): TColorReturnType {
             const colorSet: TColorReturnType = document.children
-                .filter<TColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
+                .filter<TColorSetFrame>(isFrame) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
                     name,
-                    children: children.filter(isFrameInObject), // 2-depth : [Gray_10, Gray_9, ...]
+                    children: children.filter(isFrame), // 2-depth : [Gray_10, Gray_9, ...]
                 }))
                 .reduce(
                     (root, { name: rootName, children }) => ({
@@ -55,9 +55,9 @@ async function setTypo() {
         nodeId: TYPO_NODE_ID,
         fileName: 'typo',
         transform(document: TTypoDocumentFrame) {
-            const usage = document.children.filter<TUsageFrame>(isFrameInObject)[0].children
+            const usage = document.children.filter<TUsageFrame>(isFrame)[0].children
 
-            return usage.filter<TTypoFrame>(isFrameInObject).reduce(
+            return usage.filter<TTypoFrame>(isFrame).reduce(
                 (obj, { name, children }) => ({
                     ...obj,
                     [toSnakeCaseBySeperator(name)]: children.filter<IText>(
