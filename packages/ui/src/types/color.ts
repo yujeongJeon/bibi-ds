@@ -1,4 +1,4 @@
-import { IFigmaDocument, IFrame } from './figma'
+import { IFrame } from './figma'
 
 export type TColorSetName = 'Grayscale' | 'Sub' | 'Brand' | 'Background' | 'Border'
 
