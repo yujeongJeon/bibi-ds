@@ -39,7 +39,7 @@ export interface IFigmaDocument<T extends IFrame = IFrame> {
     }
 }
 
-export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME'
+export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME' | 'GROUP'
 
 export interface ICommon<T extends string = string> {
     id: string
@@ -61,4 +61,9 @@ export interface IVector<Name extends string = string> extends ICommon<Name> {
 export interface IText<Name extends string = string> extends ICommon<Name> {
     type: 'TEXT'
     style: TTypeStyle
+}
+
+export interface IGroup<Name extends string = string> extends ICommon<Name> {
+    type: 'GROUP'
+    children: ICommon[]
 }
