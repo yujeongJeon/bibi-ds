@@ -87,3 +87,8 @@ export interface IComponent extends ICommon {
     type: 'COMPONENT'
     children: ICommon[]
 }
+
+export type TImageResponse = {
+    err?: number
+    images: Record<string, string>
+}

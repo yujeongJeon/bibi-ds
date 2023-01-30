@@ -9,6 +9,10 @@
         "start": "npx ts-node -r dotenv/config ./main.ts"
     },
     "devDependencies": {
+        "@svgr/core": "^6.5.1",
+        "@svgr/plugin-jsx": "^6.5.1",
+        "@svgr/plugin-prettier": "^6.5.1",
+        "@svgr/plugin-svgo": "^6.5.1",
         "@types/styled-components": "^5.1.26",
         "dotenv": "^16.0.3",
         "eslint": "^7.32.0",

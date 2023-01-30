@@ -28,3 +28,6 @@ export const toSnakeCaseBySeperator = (str: string, seperator = '/') =>
         .split(seperator)
         .map((str) => str.toUpperCase())
         .join('_')
+
+// todo : 작업 예정
+export const snakeToPascalString = (str: string) => ''

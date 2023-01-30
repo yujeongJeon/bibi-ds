@@ -36,16 +36,17 @@ const updateFigmaFiles = async ({
                 headers: {
                     'X-Figma-Token': FIGMA_TOKEN,
                 },
-                transformResponse: [function(data) {
-                    try {
+                transformResponse: [
+                    function (data) {
+                        try {
                             const figmaContent: IFigmaDocument = JSON.parse(data)
                             const document = figmaContent.nodes[nodeId].document
                             return transform(document)
-                    } catch (error) {
-                        throw error
-                    }
-                    
-                }],
+                        } catch (error) {
+                            throw error
+                        }
+                    },
+                ],
             },
         )
 
@@ -54,7 +55,7 @@ const updateFigmaFiles = async ({
         if (isAxiosError(error) || error instanceof Error) {
             console.error(`[${fileName}] ${error.message}`)
         }
-        
+
         throw error
     }
 }

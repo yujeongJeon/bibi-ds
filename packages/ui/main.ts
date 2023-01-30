@@ -1,8 +1,10 @@
 /* eslint-disable import/no-unresolved */
+import getFileNode from './src/apis/getFileNode'
+import convertSvgToReactNode from './src/apis/convertSvgToReactNode'
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
-import { IText } from './src/types/figma'
+import { IComponent, IText } from './src/types/figma'
 import { TIconDocumentFrame, TSizeGroup, TSizeReturnType } from './src/types/icon'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
@@ -97,6 +99,18 @@ async function setIcon() {
 
             const content: TSizeReturnType = JSON.parse(JSON.stringify(sizeSet))
             return content
+        },
+    })
+
+    await getFileNode({
+        nodeId: ICON_NODE_ID,
+        async transform(document: TIconDocumentFrame) {
+            const components = document.children.filter<IComponent>((child): child is IComponent =>
+                isComponent<IComponent>(child),
+            )
+
+            const ids = Object.fromEntries(components.map(({ id, name }) => [id, name]))
+            await convertSvgToReactNode(ids)
         },
     })
 }
