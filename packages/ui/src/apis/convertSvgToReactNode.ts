@@ -15,7 +15,7 @@ const updateOrCreateFile = (targetFilePath: string, content: string) => {
 }
 
 const createIconComponent = (content: string, fileName: string) => {
-    updateOrCreateFile(`${ICON_PATH}${fileName}`, content)
+    updateOrCreateFile(`${ICON_PATH}/${fileName}`, content)
 }
 
 const convertSvgToReactNode = async (ids: Record<string, string>) => {
