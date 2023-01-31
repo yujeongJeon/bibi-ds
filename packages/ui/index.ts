@@ -4,3 +4,5 @@ export { TYPOS } from './src/Foundation/typo'
 export type { TTypo } from './src/Foundation/typo'
 
 export { default as GlobalStyle } from './src/Foundation/global'
+
+export * from './src/Foundation/icon'
