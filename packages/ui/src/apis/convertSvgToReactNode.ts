@@ -64,6 +64,17 @@ const convertSvgToReactNode = async (ids: Record<string, string>) => {
                         jsxRuntime: 'automatic',
                         typescript: true,
                         memo: true,
+                        svgProps: {
+                            width: '{props.width}',
+                            height: '{props.height}',
+                        },
+                        replaceAttrValues: {
+                            '#121D2E': '{props.fill}',
+                            '#000': '{props.fill}',
+                            '#172E48': '{props.fill}',
+                            '#181600': '{props.fill}',
+                            '#D7DBE2': '{props.fill}',
+                        },
                     },
                     {
                         componentName,
