@@ -47,7 +47,6 @@ import {
     IcShare,
     IcShield,
     IcSiren,
-    IcSymbol,
     IcThumbUp,
     IcThumbUpFill,
     IcTransfer,
@@ -233,9 +232,6 @@ export const Icon = ({ fill }: { fill: string }) => {
                 </Rectangle>
                 <Rectangle className="icon">
                     <IcSiren {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcSymbol {...commonProps} />
                 </Rectangle>
                 <Rectangle className="icon">
                     <IcThumbUp {...commonProps} />
