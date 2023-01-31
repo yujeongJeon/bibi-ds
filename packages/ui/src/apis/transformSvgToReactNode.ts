@@ -63,7 +63,7 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
     return { key: componentName, status: 'OK' }
 }
 
-const convertSvgToReactNode = async (ids: Record<string, string>) => {
+const transformSvgToReactNode = async (ids: Record<string, string>) => {
     try {
         if (!FIGMA_TOKEN) {
             throw new Error('figma access token이 없습니다. .env에 설정해주세요.')
@@ -99,13 +99,12 @@ const convertSvgToReactNode = async (ids: Record<string, string>) => {
                 }),
             ),
         )
-        console.log(results)
 
         createFile(updateImportFile(Object.keys(results)), 'index.ts')
     } catch (error) {
-        console.log(error)
+        console.error(error)
         throw error
     }
 }
 
-export default convertSvgToReactNode
+export default transformSvgToReactNode

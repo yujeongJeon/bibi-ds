@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import getFileNode from './src/apis/getFileNode'
-import convertSvgToReactNode from './src/apis/convertSvgToReactNode'
+import transformSvgToReactNode from './src/apis/transformSvgToReactNode'
 import updateFigmaFiles from './src/apis/updateFile'
 import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
@@ -110,7 +110,7 @@ async function setIcon() {
             )
 
             const ids = Object.fromEntries(components.map(({ id, name }) => [id, name]))
-            await convertSvgToReactNode(ids)
+            await transformSvgToReactNode(ids)
         },
     })
 }
