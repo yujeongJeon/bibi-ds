@@ -5,6 +5,7 @@ import { transform } from '@svgr/core'
 import path from 'path'
 import fs from 'fs'
 import { snakeToPascalString } from '../utils'
+import { createSettledResponse } from '../utils/promise'
 
 const ICON_PATH = path.resolve(__dirname, '../Foundation/icon/')
 
@@ -14,8 +15,52 @@ const updateOrCreateFile = (targetFilePath: string, content: string) => {
     })
 }
 
-const createIconComponent = (content: string, fileName: string) => {
+const createFile = (content: string, fileName: string) => {
     updateOrCreateFile(`${ICON_PATH}/${fileName}`, content)
+}
+
+const updateImportFile = (componentNames: string[]) =>
+    componentNames.reduce((str, componentName, index) => {
+        const format = `export {default as ${componentName}} from './${componentName}'`
+        return `${str}${str ? '\n' + format : format}${index === componentNames.length - 1 ? '\n' : ''}`
+    }, '')
+
+const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<string, string>) => {
+    const res = await axios.get(url, {
+        headers: {
+            'X-Figma-Token': FIGMA_TOKEN,
+            'Content-Type': 'text/html',
+        },
+    })
+    const svgCode = res.data
+    const componentName = `${snakeToPascalString(ids[imageId].replace(/[\-\s\!]+/gi, '_'))}`
+    const jsCode = await transform(
+        svgCode,
+        {
+            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
+            icon: true,
+            jsxRuntime: 'automatic',
+            typescript: true,
+            memo: true,
+            svgProps: {
+                width: '{props.width}',
+                height: '{props.height}',
+            },
+            replaceAttrValues: {
+                '#121D2E': '{props.fill}',
+                '#000': '{props.fill}',
+                '#172E48': '{props.fill}',
+                '#181600': '{props.fill}',
+                '#D7DBE2': '{props.fill}',
+            },
+        },
+        {
+            componentName,
+            filePath: ICON_PATH,
+        },
+    )
+    createFile(jsCode, `${componentName}.tsx`)
+    return { key: componentName, status: 'OK' }
 }
 
 const convertSvgToReactNode = async (ids: Record<string, string>) => {
@@ -46,45 +91,17 @@ const convertSvgToReactNode = async (ids: Record<string, string>) => {
             throw new Error(`[${err}] 이미지 url을 가져오는 데 문제가 발생했습니다.`)
         }
 
-        Promise.allSettled(
-            Object.entries(images).map(async ([imageId, url]) => {
-                const res = await axios.get(url, {
-                    headers: {
-                        'X-Figma-Token': FIGMA_TOKEN,
-                        'Content-Type': 'text/html',
-                    },
-                })
-                const svgCode = res.data
-                const componentName = `${snakeToPascalString(ids[imageId].replace(/[\-\s\!]+/gi, '_'))}`
-                const jsCode = await transform(
-                    svgCode,
-                    {
-                        plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
-                        icon: true,
-                        jsxRuntime: 'automatic',
-                        typescript: true,
-                        memo: true,
-                        svgProps: {
-                            width: '{props.width}',
-                            height: '{props.height}',
-                        },
-                        replaceAttrValues: {
-                            '#121D2E': '{props.fill}',
-                            '#000': '{props.fill}',
-                            '#172E48': '{props.fill}',
-                            '#181600': '{props.fill}',
-                            '#D7DBE2': '{props.fill}',
-                        },
-                    },
-                    {
-                        componentName,
-                        filePath: ICON_PATH,
-                    },
-                )
-                createIconComponent(jsCode, `${componentName}.tsx`)
-                return jsCode
-            }),
+        const results = createSettledResponse(
+            await Promise.allSettled(
+                Object.entries(images).map(async (image) => {
+                    const res = await transformSvgCode(image, ids)
+                    return { ...res }
+                }),
+            ),
         )
+        console.log(results)
+
+        createFile(updateImportFile(Object.keys(results)), 'index.ts')
     } catch (error) {
         console.log(error)
         throw error

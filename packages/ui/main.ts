@@ -121,7 +121,7 @@ type TSetResponse = {
 }
 
 async function main() {
-    const results = createSettledResponse<TSetResponse, 'color' | 'typo'>(
+    const results = createSettledResponse<TSetResponse, 'color' | 'typo' | 'icon'>(
         await Promise.allSettled([
             setColor()
                 .then((): TSetResponse => ({ status: 'OK', key: 'color' } as TSetResponse))
