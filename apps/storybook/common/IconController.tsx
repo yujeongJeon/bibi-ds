@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { COLORS, ICON_SIZE, TIconSize } from 'ui'
+import { COLORS, ICON_SIZE, TIconSize, TYPOS } from 'ui'
 import { TSvgReactNode } from '../types/svg'
 import { flattenObject } from '../utils'
 import { Column, Row } from './Flex'
@@ -34,7 +34,7 @@ function IconController({ targetIcon: TargetIcon }: { targetIcon: TSvgReactNode 
                         width={270}
                     />
                 </SelectBoxes>
-                <Column>Code section</Column>
+                <CodeView>🚧 Code section</CodeView>
             </Controllers>
             <Preview>{TargetIcon && <TargetIcon width={size.width} height={size.height} fill={color} />}</Preview>
         </ModalContainer>
@@ -43,6 +43,7 @@ function IconController({ targetIcon: TargetIcon }: { targetIcon: TSvgReactNode 
 
 const ModalContainer = styled(Row)`
     padding: 60px 20px 20px 20px;
+    height: 200px;
 `
 
 const Controllers = styled(Column).attrs({
@@ -57,9 +58,19 @@ const SelectBoxes = styled(Row)`
     gap: 10px;
 `
 
+const CodeView = styled(Column)`
+    ${TYPOS.PRETENDARD_HEAD4_BOLD}
+    width: 460px;
+    margin: 10px auto;
+    height: 105px;
+    color: ${COLORS.GRAYSCALE.GRAY_5};
+`
+
 const Preview = styled(Column)`
     width: 200px;
     height: 200px;
+    outline: 1px solid ${COLORS.BORDER.PRIMARY};
+    background-color: #fff;
 `
 
 export default IconController
