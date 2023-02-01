@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { isAxiosError } from 'axios'
 import { FIGMA_TOKEN } from '../configs/figma'
 import { IFigmaDocument, IFrame } from '../types/figma'
 
@@ -29,7 +29,13 @@ const getFileNode = async ({ nodeId, transform }: { nodeId: string; transform(da
         )
 
         return res.data
-    } catch {}
+    } catch (error) {
+        if (isAxiosError(error) || error instanceof Error) {
+            console.error(error)
+        }
+
+        throw error
+    }
 }
 
 export default getFileNode

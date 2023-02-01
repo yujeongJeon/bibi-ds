@@ -3,21 +3,11 @@ import { FIGMA_TOKEN } from '../configs/figma'
 import { TImageResponse } from '../types/figma'
 import { transform } from '@svgr/core'
 import path from 'path'
-import fs from 'fs'
 import { snakeToPascalString } from '../utils'
 import { createSettledResponse } from '../utils/promise'
+import { writeFile } from '../utils/file'
 
 const ICON_PATH = path.resolve(__dirname, '../Foundation/icon/')
-
-const updateOrCreateFile = (targetFilePath: string, content: string) => {
-    fs.writeFileSync(targetFilePath, content, {
-        encoding: 'utf-8',
-    })
-}
-
-const createFile = (content: string, fileName: string) => {
-    updateOrCreateFile(`${ICON_PATH}/${fileName}`, content)
-}
 
 const updateImportFile = (componentNames: string[]) =>
     componentNames.reduce((str, componentName, index) => {
@@ -60,7 +50,7 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
             filePath: ICON_PATH,
         },
     )
-    createFile(jsCode, `${componentName}.tsx`)
+    writeFile(jsCode, { name: `${componentName}.tsx`, path: ICON_PATH })
     return { key: componentName, status: 'OK' }
 }
 
@@ -101,7 +91,7 @@ const transformSvgToReactNode = async (ids: Record<string, string>) => {
             ),
         )
 
-        createFile(updateImportFile(Object.keys(results)), 'index.ts')
+        writeFile(updateImportFile(Object.keys(results)), { name: 'index.ts', path: ICON_PATH })
     } catch (error) {
         console.error(error)
         throw error

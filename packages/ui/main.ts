@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import getFileNode from './src/apis/getFileNode'
 import transformSvgToReactNode from './src/apis/transformSvgToReactNode'
-import updateFigmaFiles from './src/apis/updateFile'
+import updateJson from './src/apis/updateJson'
 import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
 import { IComponent, IText } from './src/types/figma'
@@ -13,7 +13,7 @@ import { isComponent, isFrame, isGroup } from './src/utils/figma'
 import { createSettledResponse } from './src/utils/promise'
 
 async function setColor() {
-    await updateFigmaFiles({
+    await updateJson({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
         transform: function transform(document: TColorDocumentFrame): TColorReturnType {
@@ -51,7 +51,7 @@ async function setColor() {
 }
 
 async function setTypo() {
-    await updateFigmaFiles({
+    await updateJson({
         nodeId: TYPO_NODE_ID,
         fileName: 'typo',
         transform(document: TTypoDocumentFrame) {
@@ -71,7 +71,8 @@ async function setTypo() {
 }
 
 async function setIcon() {
-    await updateFigmaFiles({
+    // get size
+    await updateJson({
         nodeId: ICON_NODE_ID,
         fileName: 'size',
         transform(document: TIconDocumentFrame): TSizeReturnType {
@@ -102,6 +103,7 @@ async function setIcon() {
         },
     })
 
+    // get icon
     await getFileNode({
         nodeId: ICON_NODE_ID,
         async transform(document: TIconDocumentFrame) {
