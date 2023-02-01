@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { COLORS, TYPOS } from 'ui'
 import type { TTypo } from 'ui'
-import { Column, Flex, InlineColumn, Row } from '../../common/Component'
+import { Column, Flex, InlineColumn, Row } from '../../common/Flex'
 import { snakeToPascalString } from '../../utils'
 
 const BOX_SIZE = 500

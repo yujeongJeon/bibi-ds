@@ -1,27 +1,27 @@
 /* eslint-disable import/no-unresolved */
-import updateFigmaFiles from './src/apis/updateFile'
-import { COLOR_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
+import getFileNode from './src/apis/getFileNode'
+import transformSvgToReactNode from './src/apis/transformSvgToReactNode'
+import updateJson from './src/apis/updateJson'
+import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
-import { IFrame, ICommon, IText } from './src/types/figma'
+import { IComponent, IText } from './src/types/figma'
+import { TIconDocumentFrame, TSizeGroup, TSizeReturnType } from './src/types/icon'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
+import { isComponent, isFrame, isGroup } from './src/utils/figma'
 import { createSettledResponse } from './src/utils/promise'
 
-function isFrameInObject<T extends IFrame>(children: ICommon): children is T {
-    return children.type === 'FRAME'
-}
-
 async function setColor() {
-    await updateFigmaFiles({
+    await updateJson({
         nodeId: COLOR_NODE_ID,
         fileName: 'color',
         transform: function transform(document: TColorDocumentFrame): TColorReturnType {
             const colorSet: TColorReturnType = document.children
-                .filter<TColorSetFrame>(isFrameInObject) // 1-depth : Sub, Grayscale, ...
+                .filter<TColorSetFrame>(isFrame) // 1-depth : Sub, Grayscale, ...
                 .map(({ name, children }) => ({
                     name,
-                    children: children.filter(isFrameInObject), // 2-depth : [Gray_10, Gray_9, ...]
+                    children: children.filter(isFrame), // 2-depth : [Gray_10, Gray_9, ...]
                 }))
                 .reduce(
                     (root, { name: rootName, children }) => ({
@@ -44,20 +44,20 @@ async function setColor() {
                     {} as TColorReturnType,
                 )
 
-            const content = JSON.parse(JSON.stringify(colorSet))
+            const content: TColorReturnType = JSON.parse(JSON.stringify(colorSet))
             return content
         },
     })
 }
 
 async function setTypo() {
-    await updateFigmaFiles({
+    await updateJson({
         nodeId: TYPO_NODE_ID,
         fileName: 'typo',
         transform(document: TTypoDocumentFrame) {
-            const usage = document.children.filter<TUsageFrame>(isFrameInObject)[0].children
+            const usage = document.children.filter<TUsageFrame>(isFrame)[0].children
 
-            return usage.filter<TTypoFrame>(isFrameInObject).reduce(
+            return usage.filter<TTypoFrame>(isFrame).reduce(
                 (obj, { name, children }) => ({
                     ...obj,
                     [toSnakeCaseBySeperator(name)]: children.filter<IText>(
@@ -70,13 +70,60 @@ async function setTypo() {
     })
 }
 
+async function setIcon() {
+    // get size
+    await updateJson({
+        nodeId: ICON_NODE_ID,
+        fileName: 'size',
+        transform(document: TIconDocumentFrame): TSizeReturnType {
+            const size = document.children.filter<TSizeGroup>(
+                (child): child is TSizeGroup => isGroup<TSizeGroup>(child) || child.name === 'Size',
+            )[0]
+
+            const sizeSet = size.children
+                .filter(isGroup)
+                .map(({ name, children }) => ({
+                    name,
+                    children: children.filter(isComponent)[0],
+                }))
+                .filter(({ children }) => !!children)
+                .reduce((result, { name, children }) => {
+                    const { width, height } = children.absoluteBoundingBox
+                    return {
+                        ...result,
+                        [name.toUpperCase()]: {
+                            width,
+                            height,
+                        },
+                    }
+                }, {} as TSizeReturnType)
+
+            const content: TSizeReturnType = JSON.parse(JSON.stringify(sizeSet))
+            return content
+        },
+    })
+
+    // get icon
+    await getFileNode({
+        nodeId: ICON_NODE_ID,
+        async transform(document: TIconDocumentFrame) {
+            const components = document.children.filter<IComponent>((child): child is IComponent =>
+                isComponent<IComponent>(child),
+            )
+
+            const ids = Object.fromEntries(components.map(({ id, name }) => [id, name]))
+            await transformSvgToReactNode(ids)
+        },
+    })
+}
+
 type TSetResponse = {
     key: string
     status: 'OK' | 'ERROR'
 }
 
 async function main() {
-    const results = createSettledResponse<TSetResponse, 'color' | 'typo'>(
+    const results = createSettledResponse<TSetResponse, 'color' | 'typo' | 'icon'>(
         await Promise.allSettled([
             setColor()
                 .then((): TSetResponse => ({ status: 'OK', key: 'color' } as TSetResponse))
@@ -84,6 +131,9 @@ async function main() {
             setTypo()
                 .then(() => ({ status: 'OK', key: 'typo' } as TSetResponse))
                 .catch(() => ({ status: 'ERROR', key: 'typo' } as TSetResponse)),
+            setIcon()
+                .then(() => ({ status: 'OK', key: 'icon' } as TSetResponse))
+                .catch(() => ({ status: 'ERROR', key: 'icon' } as TSetResponse)),
         ]),
     )
 
