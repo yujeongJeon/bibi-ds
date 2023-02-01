@@ -4,6 +4,7 @@ import { COLORS, IcDown, ICON_SIZE, TIconSize, TYPOS } from 'ui'
 import { Column, Row } from './Flex'
 import styled, { css } from 'styled-components'
 import { getKeyByValue } from '../utils'
+import { IconBox } from './Icon'
 
 export default function SelectBox({
     title,
@@ -32,7 +33,7 @@ export default function SelectBox({
                 <Container width={width}>
                     <Button>
                         <span>{(displayBy === 'value' ? selected : getKeyByValue(list, selected)) || '선택'}</span>
-                        <IconBox size={ICON_SIZE.S}>
+                        <IconBox size={ICON_SIZE.S} marginLeft={3}>
                             <IcDown width={20} height={20} fill={COLORS.GRAYSCALE.GRAY_10} />
                         </IconBox>
                     </Button>
@@ -84,14 +85,6 @@ const Button = styled(Listbox.Button)`
 const Container = styled(Column)<{ width?: number }>`
     position: relative;
     width: ${({ width }) => `${width}px` || '100%'};
-`
-
-const IconBox = styled.span<{ size: TIconSize }>`
-    ${({ size }) => css`
-        width: ${size.width}px;
-        height: ${size.height}px;
-        margin-left: 3px;
-    `}
 `
 
 const Options = styled(Listbox.Options)`

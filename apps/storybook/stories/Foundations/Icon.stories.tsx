@@ -33,6 +33,7 @@ import {
     IcNew,
     IcNext,
     IcOn,
+    ICON_SIZE,
     IcOption,
     IcPencil,
     IcProfile,
@@ -58,6 +59,7 @@ import {
 } from 'ui'
 import AutoSelectInput from '../../common/AutoSelectInput'
 import { Column, Flex, Row } from '../../common/Flex'
+import { IconBox } from '../../common/Icon'
 import IconController from '../../common/IconController'
 import Modal from '../../common/Modal'
 import useToggle from '../../hooks/useToggle'
@@ -131,6 +133,7 @@ const Rectangle = styled(Flex)`
     height: 80px;
     background-color: ${COLORS.BACKGROUND.SECONDARY};
     border-radius: 4px;
+    cursor: pointer;
 `
 
 const Total = styled(Row).attrs({
@@ -159,6 +162,12 @@ const BookmarkSection = styled(Column).attrs({
 
 const IconSection = styled(Column)`
     width: 100%;
+`
+
+const Tip = styled(Row)`
+    ${TYPOS.PRETENDARD_BODY1_MEDIUM}
+    color: ${COLORS.SUB.TEAL_DEFAULT};
+    margin-bottom: 20px;
 `
 
 export const Icon = () => {
@@ -200,6 +209,12 @@ export const Icon = () => {
                 <IconSection>
                     <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
                     <Total>총 {numOfIcons}개의 아이콘</Total>
+                    <Tip>
+                        <IconBox size={ICON_SIZE.S} marginRight={3}>
+                            <IcFill width={20} height={20} fill={COLORS.SUB.TEAL_DEFAULT} />
+                        </IconBox>
+                        아이콘을 클릭하면 컬러와 사이즈를 조절해 코드를 복사할 수 있습니다.
+                    </Tip>
                     <Container>
                         {Object.entries(IconSet).map(([iconName, Icon]) =>
                             searchIcons[iconName] ? (
