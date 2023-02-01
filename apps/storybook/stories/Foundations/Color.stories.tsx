@@ -15,12 +15,6 @@ const Rectangle = styled.div<{ color: string }>`
     will-change: transform;
     transition: all 0.2s ease-in;
     cursor: pointer;
-
-    &:hover {
-        transform: scale(1.0658) translate(0, 0);
-        z-index: 1;
-        border-radius: 2px;
-    }
 `
 
 const Text = styled.span<{ isCopied: boolean }>`
