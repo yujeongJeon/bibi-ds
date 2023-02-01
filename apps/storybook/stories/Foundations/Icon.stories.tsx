@@ -56,7 +56,7 @@ import {
     IcWarning,
     TYPOS,
 } from 'ui'
-import { Column, Flex, Row } from '../../common/Component'
+import { Column, Flex, Row } from '../../common/Flex'
 import { flattenObjectToArray } from '../../utils'
 
 const Container = styled(Row).attrs({
