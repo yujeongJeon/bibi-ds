@@ -1,12 +1,12 @@
 import { SVGProps, memo } from 'react'
 const IcCheckBox = (props: SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width={props.width}
         height={props.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
     >
         <g clipPath="url(#icon__a)">
             <circle cx={12} cy={12} r={9.6} fill={props.fill} />

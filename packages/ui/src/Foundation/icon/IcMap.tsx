@@ -1,12 +1,12 @@
 import { SVGProps, memo } from 'react'
 const IcMap = (props: SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width={props.width}
         height={props.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
     >
         <g clipPath="url(#icon__a)" fillRule="evenodd" clipRule="evenodd" fill={props.fill}>
             <path d="m20.88 19.577-2.946-4.123a1.803 1.803 0 0 0-.999-.688l-.046.056c-.767.908-1.743 1.928-3.071 3.213a2.606 2.606 0 0 1-1.818.732 2.602 2.602 0 0 1-1.816-.732c-1.356-1.311-2.347-2.35-3.12-3.271-.406.105-.762.349-1.007.69L3.11 19.577A.9.9 0 0 0 3.843 21h16.304c.732 0 1.157-.827.732-1.423" />

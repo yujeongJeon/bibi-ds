@@ -46,6 +46,7 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
                 width: '{props.width}',
                 height: '{props.height}',
             },
+            expandProps: 'start',
             replaceAttrValues: {
                 '#121D2E': '{props.fill}',
                 '#000': '{props.fill}',

@@ -1,12 +1,12 @@
 import { SVGProps, memo } from 'react'
 const IcReComment = (props: SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width={props.width}
         height={props.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
     >
         <g clipPath="url(#icon__a)" fill={props.fill}>
             <path d="M4.5 4H6v12H4.5z" />

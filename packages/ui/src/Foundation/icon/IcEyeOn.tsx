@@ -1,12 +1,12 @@
 import { SVGProps, memo } from 'react'
 const IcEyeOn = (props: SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width={props.width}
         height={props.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
     >
         <g clipPath="url(#icon__a)" fillRule="evenodd" clipRule="evenodd" fill={props.fill}>
             <path d="M12.104 9.688a2.418 2.418 0 0 0-2.416 2.416 2.418 2.418 0 0 0 2.416 2.417 2.418 2.418 0 0 0 2.417-2.417 2.418 2.418 0 0 0-2.417-2.416Z" />

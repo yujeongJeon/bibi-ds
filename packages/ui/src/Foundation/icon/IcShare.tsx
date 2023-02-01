@@ -1,12 +1,12 @@
 import { SVGProps, memo } from 'react'
 const IcShare = (props: SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width={props.width}
         height={props.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
     >
         <g clipPath="url(#icon__a)" fillRule="evenodd" clipRule="evenodd" fill={props.fill}>
             <path d="m8.278 9.676 2.795-2.796v7.65a.917.917 0 1 0 1.834 0V6.88l2.796 2.796a.912.912 0 0 0 1.494-.298A.917.917 0 0 0 17 8.38l-4.361-4.36a.92.92 0 0 0-1.296 0L6.98 8.378a.918.918 0 0 0 1.297 1.297Z" />
