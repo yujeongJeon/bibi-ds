@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {
     COLORS,
@@ -56,12 +56,68 @@ import {
     IcWarning,
     TYPOS,
 } from 'ui'
+import AutoSelectInput from '../../common/AutoSelectInput'
 import { Column, Flex, Row } from '../../common/Flex'
-import { flattenObjectToArray } from '../../utils'
+
+const IconSet = {
+    IcAdd: IcAdd,
+    IcAlarm: IcAlarm,
+    IcApple: IcApple,
+    IcBack: IcBack,
+    IcBackArrow: IcBackArrow,
+    IcBookmark: IcBookmark,
+    IcCalendar: IcCalendar,
+    IcCamera: IcCamera,
+    IcCancel: IcCancel,
+    IcChat: IcChat,
+    IcCheck: IcCheck,
+    IcCheckBox: IcCheckBox,
+    IcComment: IcComment,
+    IcCommunity: IcCommunity,
+    IcDocument: IcDocument,
+    IcDown: IcDown,
+    IcDownload: IcDownload,
+    IcEyeOff: IcEyeOff,
+    IcEyeOn: IcEyeOn,
+    IcFill: IcFill,
+    IcFilter: IcFilter,
+    IcHeart: IcHeart,
+    IcHome: IcHome,
+    IcKakao: IcKakao,
+    IcLocation: IcLocation,
+    IcLockFill: IcLockFill,
+    IcMap: IcMap,
+    IcMenu: IcMenu,
+    IcNew: IcNew,
+    IcNext: IcNext,
+    IcOn: IcOn,
+    IcOption: IcOption,
+    IcPencil: IcPencil,
+    IcProfile: IcProfile,
+    IcQuestion: IcQuestion,
+    IcRecommend: IcRecommend,
+    IcReComment: IcReComment,
+    IcRemove: IcRemove,
+    IcReset: IcReset,
+    IcSearch: IcSearch,
+    IcSend: IcSend,
+    IcSetting: IcSetting,
+    IcShare: IcShare,
+    IcShield: IcShield,
+    IcSiren: IcSiren,
+    IcThumbUp: IcThumbUp,
+    IcThumbUpFill: IcThumbUpFill,
+    IcTransfer: IcTransfer,
+    IcTrash: IcTrash,
+    IcUp: IcUp,
+    IcUserSquare: IcUserSquare,
+    IcWarning: IcWarning,
+}
 
 const Container = styled(Row).attrs({
     justifyContent: 'flex-start',
 })`
+    width: 100%;
     gap: 6px;
     flex-wrap: wrap;
 `
@@ -79,181 +135,45 @@ const Total = styled(Row).attrs({
 })`
     ${TYPOS.PRETENDARD_BODY1_MEDIUM}
     width: 100%;
-    margin-bottom: 20px;
+    margin: 20px 0;
     color: ${COLORS.GRAYSCALE.GRAY_4};
 `
 
-export const Icon = ({ fill }: { fill: string }) => {
+export const Icon = () => {
+    const [searchIcons, setSearchIcons] = useState<Record<string, boolean>>({} as Record<string, boolean>)
+    const [numOfIcons, setNumOfIcons] = useState(0)
+
+    const onSearch = useCallback((result: string[]) => {
+        const nextSeachIcons = {} as Record<string, boolean>
+        result.forEach((iconName) => {
+            nextSeachIcons[iconName] = true
+        }, [])
+
+        setSearchIcons(nextSeachIcons)
+    }, [])
+
     const commonProps = {
         width: 24,
         height: 24,
-        fill,
+        fill: COLORS.GRAYSCALE.GRAY_10,
     }
-    const [numOfIcons, setNumOfIcons] = useState(0)
 
     useEffect(() => {
-        setNumOfIcons(Array.from(document.querySelectorAll('.icon')).length)
-    }, [])
+        setNumOfIcons(Object.keys(searchIcons).length)
+    }, [searchIcons])
+
     return (
         <Column>
+            <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
             <Total>총 {numOfIcons}개의 아이콘</Total>
             <Container>
-                <Rectangle className="icon">
-                    <IcAdd {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcAlarm {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcApple {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcBack {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcBackArrow {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcBookmark {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCalendar {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCamera {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCancel {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcChat {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCheck {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCheckBox {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcComment {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcCommunity {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcDocument {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcDown {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcDownload {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcEyeOff {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcEyeOn {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcFill {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcFilter {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcHeart {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcHome {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcKakao {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcLocation {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcLockFill {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcMap {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcMenu {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcNew {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcNext {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcOn {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcOption {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcPencil {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcProfile {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcQuestion {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcReComment {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcRecommend {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcRemove {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcReset {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcSearch {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcSend {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcSetting {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcShare {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcShield {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcSiren {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcThumbUp {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcThumbUpFill {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcTransfer {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcTrash {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcUp {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcUserSquare {...commonProps} />
-                </Rectangle>
-                <Rectangle className="icon">
-                    <IcWarning {...commonProps} />
-                </Rectangle>
+                {Object.entries(IconSet).map(([iconName, Icon]) =>
+                    searchIcons[iconName] ? (
+                        <Rectangle key={iconName}>
+                            <Icon {...commonProps} />
+                        </Rectangle>
+                    ) : null,
+                )}
             </Container>
         </Column>
     )
@@ -262,11 +182,4 @@ export const Icon = ({ fill }: { fill: string }) => {
 export default {
     title: "Bibi's Design System/Foundation/Icon",
     component: Icon,
-    argTypes: {
-        fill: {
-            control: { type: 'select' },
-            options: flattenObjectToArray(COLORS),
-            defaultValue: COLORS.GRAYSCALE.GRAY_10,
-        },
-    },
 }
