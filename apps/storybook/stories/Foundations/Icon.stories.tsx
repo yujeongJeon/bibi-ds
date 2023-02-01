@@ -58,6 +58,10 @@ import {
 } from 'ui'
 import AutoSelectInput from '../../common/AutoSelectInput'
 import { Column, Flex, Row } from '../../common/Flex'
+import IconController from '../../common/IconController'
+import Modal from '../../common/Modal'
+import useToggle from '../../hooks/useToggle'
+import { TSvgReactNode } from '../../types/svg'
 
 const IconSet = {
     IcAdd: IcAdd,
@@ -160,6 +164,9 @@ const IconSection = styled(Column)`
 export const Icon = () => {
     const [searchIcons, setSearchIcons] = useState<Record<string, boolean>>({} as Record<string, boolean>)
     const [numOfIcons, setNumOfIcons] = useState(0)
+    const [targetIcon, setTargetIcon] = useState<TSvgReactNode | null>(null)
+
+    const { isOpen, open, close } = useToggle()
 
     const onSearch = useCallback((result: string[]) => {
         const nextSeachIcons = {} as Record<string, boolean>
@@ -180,27 +187,40 @@ export const Icon = () => {
         setNumOfIcons(Object.keys(searchIcons).length)
     }, [searchIcons])
 
+    const TargetIcon = targetIcon
+
     return (
-        <Row alignItems={'flex-start'}>
-            <BookmarkSection>
-                🚧
-                <br />
-                Bookmark Section
-            </BookmarkSection>
-            <IconSection>
-                <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
-                <Total>총 {numOfIcons}개의 아이콘</Total>
-                <Container>
-                    {Object.entries(IconSet).map(([iconName, Icon]) =>
-                        searchIcons[iconName] ? (
-                            <Rectangle key={iconName}>
-                                <Icon {...commonProps} />
-                            </Rectangle>
-                        ) : null,
-                    )}
-                </Container>
-            </IconSection>
-        </Row>
+        <>
+            <Row alignItems={'flex-start'}>
+                <BookmarkSection>
+                    🚧
+                    <br />
+                    Bookmark Section
+                </BookmarkSection>
+                <IconSection>
+                    <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
+                    <Total>총 {numOfIcons}개의 아이콘</Total>
+                    <Container>
+                        {Object.entries(IconSet).map(([iconName, Icon]) =>
+                            searchIcons[iconName] ? (
+                                <Rectangle
+                                    key={iconName}
+                                    onClick={() => {
+                                        open()
+                                        setTargetIcon(IconSet[iconName as keyof typeof IconSet])
+                                    }}
+                                >
+                                    <Icon {...commonProps} />
+                                </Rectangle>
+                            ) : null,
+                        )}
+                    </Container>
+                </IconSection>
+            </Row>
+            <Modal isShow={isOpen} onClose={close} showCloseButton>
+                {targetIcon && <IconController targetIcon={targetIcon} />}
+            </Modal>
+        </>
     )
 }
 
