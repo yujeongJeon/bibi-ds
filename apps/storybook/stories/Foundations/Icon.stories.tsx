@@ -139,6 +139,24 @@ const Total = styled(Row).attrs({
     color: ${COLORS.GRAYSCALE.GRAY_4};
 `
 
+const BookmarkSection = styled(Column).attrs({
+    alignItems: 'center',
+    justifyContent: 'center',
+})`
+    ${TYPOS.PRETENDARD_HEAD4_BOLD}
+    background: ${COLORS.BACKGROUND.PRIMARY};
+    width: 320px;
+    background: #f2f4f6;
+    min-height: calc(100vh - 2rem);
+    margin: 0 20px 0 0;
+    border-radius: 4px;
+    text-align: center;
+`
+
+const IconSection = styled(Column)`
+    width: 100%;
+`
+
 export const Icon = () => {
     const [searchIcons, setSearchIcons] = useState<Record<string, boolean>>({} as Record<string, boolean>)
     const [numOfIcons, setNumOfIcons] = useState(0)
@@ -163,19 +181,26 @@ export const Icon = () => {
     }, [searchIcons])
 
     return (
-        <Column>
-            <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
-            <Total>총 {numOfIcons}개의 아이콘</Total>
-            <Container>
-                {Object.entries(IconSet).map(([iconName, Icon]) =>
-                    searchIcons[iconName] ? (
-                        <Rectangle key={iconName}>
-                            <Icon {...commonProps} />
-                        </Rectangle>
-                    ) : null,
-                )}
-            </Container>
-        </Column>
+        <Row alignItems={'flex-start'}>
+            <BookmarkSection>
+                🚧
+                <br />
+                Bookmark Section
+            </BookmarkSection>
+            <IconSection>
+                <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
+                <Total>총 {numOfIcons}개의 아이콘</Total>
+                <Container>
+                    {Object.entries(IconSet).map(([iconName, Icon]) =>
+                        searchIcons[iconName] ? (
+                            <Rectangle key={iconName}>
+                                <Icon {...commonProps} />
+                            </Rectangle>
+                        ) : null,
+                    )}
+                </Container>
+            </IconSection>
+        </Row>
     )
 }
 
