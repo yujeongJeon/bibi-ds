@@ -11,3 +11,37 @@ export const flattenObjectToArray = (obj: Record<string, any>): string[] =>
         }
         return arr.concat(obj[key])
     }, [] as string[])
+
+export const getKeyByValue = (obj: Record<string, string>, targetValue: string) => {
+    const targetEntries = Object.entries(obj).filter(([, value]) => value === targetValue)
+
+    return targetEntries.length > 0 ? targetEntries[0][0] : undefined
+}
+
+type TNestedObject = {
+    [key in string]: TNestedObject | string
+}
+
+export const flattenObject = (
+    obj: TNestedObject,
+    parentKey?: string,
+    options?: {
+        excludes: string[]
+    },
+): Record<string, string> =>
+    Object.keys(obj).reduce((result, key) => {
+        if (options?.excludes.includes(key)) {
+            return result
+        }
+        const flattened =
+            typeof obj[key] !== 'string'
+                ? flattenObject(obj[key] as TNestedObject, parentKey ? `${parentKey}.${key}` : key, options)
+                : {
+                      [parentKey ? `${parentKey}.${key}` : key]: obj[key] as string,
+                  }
+
+        return {
+            ...result,
+            ...flattened,
+        }
+    }, {} as Record<string, string>)
