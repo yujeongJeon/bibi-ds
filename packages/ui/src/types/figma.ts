@@ -31,6 +31,13 @@ export type TTypeStyle = {
     lineHeightPx: number
 }
 
+export type TRectangle = {
+    x: number
+    y: number
+    width: number
+    height: number
+}
+
 export interface IFigmaDocument<T extends IFrame = IFrame> {
     nodes: {
         [key: string]: {
@@ -39,19 +46,27 @@ export interface IFigmaDocument<T extends IFrame = IFrame> {
     }
 }
 
-export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME'
+export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME' | 'GROUP'
 
 export interface ICommon<T extends string = string> {
     id: string
     name: T
     type: TNodeType
     fills: TPaint[]
+    absoluteBoundingBox: TRectangle
+    absoluteRenderBounds: TRectangle
 }
 
-export interface IFrame<Name extends string = string, NameSet extends string = string, Nested extends string = string>
-    extends ICommon<Name> {
+type TFrameOrGroup<Name extends string, SubName extends string> = IFrame<Name, SubName> | IGroup<Name, SubName>
+
+export interface IFrame<
+    Name extends string = string,
+    NameSet extends string = string,
+    Nested extends string = string,
+    NodeType = TFrameOrGroup<NameSet, Nested>,
+> extends ICommon<Name> {
     type: 'FRAME'
-    children: (ICommon | IFrame<NameSet, Nested>)[]
+    children: (ICommon | NodeType)[]
 }
 
 export interface IVector<Name extends string = string> extends ICommon<Name> {
@@ -61,4 +76,19 @@ export interface IVector<Name extends string = string> extends ICommon<Name> {
 export interface IText<Name extends string = string> extends ICommon<Name> {
     type: 'TEXT'
     style: TTypeStyle
+}
+
+export interface IGroup<Name extends string = string, NameSet extends string = string> extends ICommon<Name> {
+    type: 'GROUP'
+    children: (ICommon | IGroup<NameSet>)[]
+}
+
+export interface IComponent extends ICommon {
+    type: 'COMPONENT'
+    children: ICommon[]
+}
+
+export type TImageResponse = {
+    err?: number
+    images: Record<string, string>
 }

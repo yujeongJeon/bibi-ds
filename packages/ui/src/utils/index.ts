@@ -28,3 +28,9 @@ export const toSnakeCaseBySeperator = (str: string, seperator = '/') =>
         .split(seperator)
         .map((str) => str.toUpperCase())
         .join('_')
+
+export const snakeToPascalString = (str: string) =>
+    str.charAt(0).toUpperCase() +
+    str.slice(1).replace(/(\_[A-Za-z]{1})+/g, function (x, y) {
+        return x[1].toUpperCase()
+    })

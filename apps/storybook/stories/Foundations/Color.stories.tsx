@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { COLORS, TYPOS } from 'ui'
-import { Column, InlineColumn, Row } from '../../common/Component'
+import { Column, InlineColumn, Row } from '../../common/Flex'
 import useCopy from '../../hooks/useCopy'
 
-const Rectangle = styled.div<{ color: string;}>`
+const Rectangle = styled.div<{ color: string }>`
     background-color: ${({ color }) => color};
     width: 237px;
     height: 80px;
@@ -13,33 +13,27 @@ const Rectangle = styled.div<{ color: string;}>`
     justify-content: center;
     align-items: center;
     will-change: transform;
-    transition:  all .2s ease-in;
+    transition: all 0.2s ease-in;
     cursor: pointer;
-
-    &:hover {
-        transform: scale(1.0658) translate(0, 0);
-        z-index: 1;
-        border-radius: 2px;
-    }
 `
 
-const Text = styled.span<{isCopied: boolean}>`
+const Text = styled.span<{ isCopied: boolean }>`
     ${TYPOS.PRETENDARD_CAPTION_MEDIUM}
     background-color: ${COLORS.GRAYSCALE['GRAY_0.1']};
     padding: 2.5px 6px;
     border-radius: 2px;
-    color: ${({isCopied}) => isCopied ? COLORS.BRAND.MAINGREEN_DEFAULT : COLORS.GRAYSCALE.GRAY_10 }
+    color: ${({ isCopied }) => (isCopied ? COLORS.BRAND.MAINGREEN_DEFAULT : COLORS.GRAYSCALE.GRAY_10)};
 `
 
 const COPY_TEXT = {
     BEFORE: 'Copy',
-    AFTER: 'Copied!'
+    AFTER: 'Copied!',
 }
 
 const ColorViewer = ({ color, tokenName }: { color: string; tokenName: string }) => {
     const [isShowTooltip, toggleTooltip] = useState(false)
-    const [copyText , setCopyText] = useState(COPY_TEXT.BEFORE)
-    
+    const [copyText, setCopyText] = useState(COPY_TEXT.BEFORE)
+
     const copy = useCopy()
 
     const handleMouseOver = (isEnter: boolean) => toggleTooltip(isEnter)
@@ -58,7 +52,12 @@ const ColorViewer = ({ color, tokenName }: { color: string; tokenName: string })
     }, [copyText])
 
     return (
-        <Rectangle color={color} onMouseEnter={() => handleMouseOver(true)} onMouseLeave={() => handleMouseOver(false)} onClick={copyToken}>
+        <Rectangle
+            color={color}
+            onMouseEnter={() => handleMouseOver(true)}
+            onMouseLeave={() => handleMouseOver(false)}
+            onClick={copyToken}
+        >
             {isShowTooltip && <Text isCopied={copyText === COPY_TEXT.AFTER}>{copyText}</Text>}
         </Rectangle>
     )
@@ -79,7 +78,7 @@ const ListRow = styled(Row)`
 `
 
 const List = ({ value, colorRootName }: { value: Record<string, string>; colorRootName: string }) => {
-    const getRightPropReference = (key: string) => key.indexOf('.') > -1 ? `[\'${key}\']` : `.${key}`
+    const getRightPropReference = (key: string) => (key.indexOf('.') > -1 ? `[\'${key}\']` : `.${key}`)
 
     return (
         <ListRow justifyContent={'flex-start'}>
@@ -96,7 +95,7 @@ const List = ({ value, colorRootName }: { value: Record<string, string>; colorRo
                 </InlineColumn>
             ))}
         </ListRow>
-   )
+    )
 }
 
 const Title = styled.div`

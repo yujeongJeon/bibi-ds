@@ -16,6 +16,7 @@
         "watch:storybook": "turbo run watch --filter=storybook --include-dependencies"
     },
     "devDependencies": {
+        "@headlessui/react": "^1.7.8",
         "@types/react": "^18.0.27",
         "@types/react-dom": "^18.0.10",
         "eslint-config-custom": "*",
