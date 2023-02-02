@@ -189,7 +189,11 @@ export const Icon = () => {
         <>
             <Row alignItems={'flex-start'}>
                 <IconSection>
-                    <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
+                    <AutoSelectInput
+                        list={Object.keys(IconSet)}
+                        onSearch={onSearch}
+                        placeholder={'아이콘 이름으로 검색'}
+                    />
                     <Total>총 {numOfIcons}개의 아이콘</Total>
                     <Tip>
                         <IconBox size={ICON_SIZE.S} marginRight={3}>
