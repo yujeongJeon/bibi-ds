@@ -27,8 +27,8 @@ const GlobalStyle = createGlobalStyle`
         src: url(${PretendardBold}) format('opentype');
   }
   ::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
+    height: 4px;
+    width: 4px;
     background: transparent;
     border: none;
 }
