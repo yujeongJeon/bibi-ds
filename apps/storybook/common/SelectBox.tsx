@@ -85,6 +85,7 @@ const Button = styled(Listbox.Button)`
 const Container = styled(Column)<{ width?: number }>`
     position: relative;
     width: ${({ width }) => `${width}px` || '100%'};
+    z-index: 1;
 `
 
 const Options = styled(Listbox.Options)`
@@ -102,8 +103,4 @@ const Options = styled(Listbox.Options)`
     border: 1px solid ${COLORS.BORDER.PRIMARY};
     margin-top: 8px;
     border-radius: 12px;
-`
-
-const Option = styled(Listbox.Option)`
-    padding: 10px 0;
 `

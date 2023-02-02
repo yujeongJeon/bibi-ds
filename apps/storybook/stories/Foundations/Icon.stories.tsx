@@ -173,7 +173,10 @@ const Tip = styled(Row)`
 export const Icon = () => {
     const [searchIcons, setSearchIcons] = useState<Record<string, boolean>>({} as Record<string, boolean>)
     const [numOfIcons, setNumOfIcons] = useState(0)
-    const [targetIcon, setTargetIcon] = useState<TSvgReactNode | null>(null)
+    const [targetIcon, setTargetIcon] = useState<{
+        name: string
+        icon: TSvgReactNode | null
+    }>({ name: '', icon: null })
 
     const { isOpen, open, close } = useToggle()
 
@@ -195,8 +198,6 @@ export const Icon = () => {
     useEffect(() => {
         setNumOfIcons(Object.keys(searchIcons).length)
     }, [searchIcons])
-
-    const TargetIcon = targetIcon
 
     return (
         <>
@@ -222,7 +223,10 @@ export const Icon = () => {
                                     key={iconName}
                                     onClick={() => {
                                         open()
-                                        setTargetIcon(IconSet[iconName as keyof typeof IconSet])
+                                        setTargetIcon({
+                                            name: iconName,
+                                            icon: IconSet[iconName as keyof typeof IconSet],
+                                        })
                                     }}
                                 >
                                     <Icon {...commonProps} />
@@ -233,7 +237,7 @@ export const Icon = () => {
                 </IconSection>
             </Row>
             <Modal isShow={isOpen} onClose={close} showCloseButton>
-                {targetIcon && <IconController targetIcon={targetIcon} />}
+                {targetIcon.icon && <IconController targetIcon={targetIcon.icon} name={targetIcon.name} />}
             </Modal>
         </>
     )

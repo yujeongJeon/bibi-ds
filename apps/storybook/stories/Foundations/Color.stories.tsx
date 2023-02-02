@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { COLORS, TYPOS } from 'ui'
 import { Column, InlineColumn, Row } from '../../common/Flex'
@@ -26,30 +26,18 @@ const Text = styled.span<{ isCopied: boolean }>`
 `
 
 const COPY_TEXT = {
-    BEFORE: 'Copy',
-    AFTER: 'Copied!',
+    before: 'Copy',
+    after: 'Copied!',
 }
 
 const ColorViewer = ({ color, tokenName }: { color: string; tokenName: string }) => {
     const [isShowTooltip, toggleTooltip] = useState(false)
-    const [copyText, setCopyText] = useState(COPY_TEXT.BEFORE)
 
-    const copy = useCopy()
+    const { copy, copyText, isCopied } = useCopy({ text: COPY_TEXT })
 
     const handleMouseOver = (isEnter: boolean) => toggleTooltip(isEnter)
 
-    const copyToken = () => {
-        copy(tokenName)
-        setCopyText(COPY_TEXT.AFTER)
-    }
-
-    useEffect(() => {
-        if (copyText === COPY_TEXT.AFTER) {
-            setTimeout(() => {
-                setCopyText(COPY_TEXT.BEFORE)
-            }, 3000)
-        }
-    }, [copyText])
+    const copyToken = () => copy(tokenName)
 
     return (
         <Rectangle
@@ -58,7 +46,7 @@ const ColorViewer = ({ color, tokenName }: { color: string; tokenName: string })
             onMouseLeave={() => handleMouseOver(false)}
             onClick={copyToken}
         >
-            {isShowTooltip && <Text isCopied={copyText === COPY_TEXT.AFTER}>{copyText}</Text>}
+            {isShowTooltip && <Text isCopied={isCopied}>{copyText}</Text>}
         </Rectangle>
     )
 }

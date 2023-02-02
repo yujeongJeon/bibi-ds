@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { COLORS, IcCancel } from 'ui'
 import usePortal from '../hooks/usePortal'
 import Overlay from './Overlay'
+import { Button } from './Button'
 
 export interface HalfLayerWrapperProps {
     onClose: (e: React.SyntheticEvent) => void
@@ -41,14 +42,7 @@ const CloseButton = ({ onClose }: Pick<HalfLayerWrapperProps, 'onClose'>) => (
     </ButtonWrapper>
 )
 
-const ButtonWrapper = styled.button`
-    border: 0 none;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    cursor: pointer;
+const ButtonWrapper = styled(Button)`
     position: absolute;
     right: 0;
     top: 0;
