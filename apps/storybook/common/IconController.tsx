@@ -55,7 +55,9 @@ function IconController({ targetIcon: TargetIcon, name }: { targetIcon: TSvgReac
                 </SelectBoxes>
                 <CodeView>
                     <Code ref={$codeViewer}>
-                        {` <${name} width={${size.width}} height={${size.height}} fill={COLORS.${getKeyByValue(
+                        {`import {${name}} from 'ui'
+                        
+                        <${name} width={${size.width}} height={${size.height}} fill={COLORS.${getKeyByValue(
                             DISPLAY_COLORS,
                             color,
                         )}} />`}
