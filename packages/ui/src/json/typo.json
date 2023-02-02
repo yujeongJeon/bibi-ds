@@ -65,7 +65,7 @@
         "textAlignVertical": "TOP",
         "letterSpacing": 0,
         "lineHeightPx": 24,
-        "lineHeightPercent": 99.98373413085938,
+        "lineHeightPercent": 100.55647277832031,
         "lineHeightPercentFontSize": 120.00000762939453,
         "lineHeightUnit": "FONT_SIZE_%"
     },
@@ -93,7 +93,7 @@
         "textAlignVertical": "TOP",
         "letterSpacing": 0,
         "lineHeightPx": 19.600000381469727,
-        "lineHeightPercent": 116.6476821899414,
+        "lineHeightPercent": 117.31587219238281,
         "lineHeightPercentFontSize": 140,
         "lineHeightUnit": "FONT_SIZE_%"
     },
