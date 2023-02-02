@@ -8,8 +8,13 @@ const IcUp = (props: SVGProps<SVGSVGElement>) => (
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
-        <g clipPath="url(#icon__a)" stroke={props.fill} strokeWidth={1.5}>
-            <path d="M12.1 6v11.767M6.2 11.379 12.1 6l5.9 5.463" />
+        <g clipPath="url(#icon__a)">
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.748 16.2 19 14.926 12 7.8l-7 7.126L6.25 16.2 12 10.348l5.748 5.852Z"
+                fill={props.fill}
+            />
         </g>
         <defs>
             <clipPath id="icon__a">
