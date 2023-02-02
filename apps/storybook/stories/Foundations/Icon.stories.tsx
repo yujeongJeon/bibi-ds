@@ -33,6 +33,7 @@ import {
     IcNew,
     IcNext,
     IcOn,
+    ICON_SIZE,
     IcOption,
     IcPencil,
     IcProfile,
@@ -58,6 +59,11 @@ import {
 } from 'ui'
 import AutoSelectInput from '../../common/AutoSelectInput'
 import { Column, Flex, Row } from '../../common/Flex'
+import { IconBox } from '../../common/Icon'
+import IconController from '../../common/IconController'
+import Modal from '../../common/Modal'
+import useToggle from '../../hooks/useToggle'
+import { TSvgReactNode } from '../../types/svg'
 
 const IconSet = {
     IcAdd: IcAdd,
@@ -127,6 +133,7 @@ const Rectangle = styled(Flex)`
     height: 80px;
     background-color: ${COLORS.BACKGROUND.SECONDARY};
     border-radius: 4px;
+    cursor: pointer;
 `
 
 const Total = styled(Row).attrs({
@@ -139,27 +146,25 @@ const Total = styled(Row).attrs({
     color: ${COLORS.GRAYSCALE.GRAY_4};
 `
 
-const BookmarkSection = styled(Column).attrs({
-    alignItems: 'center',
-    justifyContent: 'center',
-})`
-    ${TYPOS.PRETENDARD_HEAD4_BOLD}
-    background: ${COLORS.BACKGROUND.PRIMARY};
-    width: 320px;
-    background: #f2f4f6;
-    min-height: calc(100vh - 2rem);
-    margin: 0 20px 0 0;
-    border-radius: 4px;
-    text-align: center;
-`
-
 const IconSection = styled(Column)`
     width: 100%;
+`
+
+const Tip = styled(Row)`
+    ${TYPOS.PRETENDARD_BODY1_MEDIUM}
+    color: ${COLORS.SUB.TEAL_DEFAULT};
+    margin-bottom: 20px;
 `
 
 export const Icon = () => {
     const [searchIcons, setSearchIcons] = useState<Record<string, boolean>>({} as Record<string, boolean>)
     const [numOfIcons, setNumOfIcons] = useState(0)
+    const [targetIcon, setTargetIcon] = useState<{
+        name: string
+        icon: TSvgReactNode | null
+    }>({ name: '', icon: null })
+
+    const { isOpen, open, close } = useToggle()
 
     const onSearch = useCallback((result: string[]) => {
         const nextSeachIcons = {} as Record<string, boolean>
@@ -181,26 +186,45 @@ export const Icon = () => {
     }, [searchIcons])
 
     return (
-        <Row alignItems={'flex-start'}>
-            <BookmarkSection>
-                🚧
-                <br />
-                Bookmark Section
-            </BookmarkSection>
-            <IconSection>
-                <AutoSelectInput list={Object.keys(IconSet)} onSearch={onSearch} />
-                <Total>총 {numOfIcons}개의 아이콘</Total>
-                <Container>
-                    {Object.entries(IconSet).map(([iconName, Icon]) =>
-                        searchIcons[iconName] ? (
-                            <Rectangle key={iconName}>
-                                <Icon {...commonProps} />
-                            </Rectangle>
-                        ) : null,
-                    )}
-                </Container>
-            </IconSection>
-        </Row>
+        <>
+            <Row alignItems={'flex-start'}>
+                <IconSection>
+                    <AutoSelectInput
+                        list={Object.keys(IconSet)}
+                        onSearch={onSearch}
+                        placeholder={'아이콘 이름으로 검색'}
+                    />
+                    <Total>총 {numOfIcons}개의 아이콘</Total>
+                    <Tip>
+                        <IconBox size={ICON_SIZE.S} marginRight={3}>
+                            <IcFill width={20} height={20} fill={COLORS.SUB.TEAL_DEFAULT} />
+                        </IconBox>
+                        아이콘을 클릭하면 컬러와 사이즈를 조절해 코드를 복사할 수 있습니다.
+                    </Tip>
+                    <Container>
+                        {Object.entries(IconSet).map(([iconName, Icon]) =>
+                            searchIcons[iconName] ? (
+                                <Rectangle
+                                    key={iconName}
+                                    onClick={() => {
+                                        open()
+                                        setTargetIcon({
+                                            name: iconName,
+                                            icon: IconSet[iconName as keyof typeof IconSet],
+                                        })
+                                    }}
+                                >
+                                    <Icon {...commonProps} />
+                                </Rectangle>
+                            ) : null,
+                        )}
+                    </Container>
+                </IconSection>
+            </Row>
+            <Modal isShow={isOpen} onClose={close} showCloseButton>
+                {targetIcon.icon && <IconController targetIcon={targetIcon.icon} name={targetIcon.name} />}
+            </Modal>
+        </>
     )
 }
 
