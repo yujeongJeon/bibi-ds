@@ -180,8 +180,7 @@ export const Icon = () => {
     }, [])
 
     const commonProps = {
-        width: 24,
-        height: 24,
+        size: ICON_SIZE.S,
         fill: COLORS.GRAYSCALE.GRAY_10,
     }
 
@@ -201,7 +200,7 @@ export const Icon = () => {
                     <Total>총 {numOfIcons}개의 아이콘</Total>
                     <Tip>
                         <IconBox size={ICON_SIZE.S} marginRight={3}>
-                            <IcFill width={20} height={20} fill={COLORS.SUB.TEAL_DEFAULT} />
+                            <IcFill size={ICON_SIZE.S} fill={COLORS.SUB.TEAL_DEFAULT} />
                         </IconBox>
                         아이콘을 클릭하면 컬러와 사이즈를 조절해 코드를 복사할 수 있습니다.
                     </Tip>

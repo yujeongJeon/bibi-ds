@@ -1,9 +1,10 @@
-import { SVGProps, memo } from 'react'
-const IcNew = (props: SVGProps<SVGSVGElement>) => (
+import { memo } from 'react'
+import { TIconSize } from './size'
+
+const IcNew = (props: { size: TIconSize, fill: string }) => (
     <svg
-        {...props}
-        width={props.width}
-        height={props.height}
+        width={props.size.width}
+        height={props.size.height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

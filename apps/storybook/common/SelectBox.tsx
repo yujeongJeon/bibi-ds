@@ -34,7 +34,7 @@ export default function SelectBox({
                     <Button>
                         <span>{(displayBy === 'value' ? selected : getKeyByValue(list, selected)) || '선택'}</span>
                         <IconBox size={ICON_SIZE.S} marginLeft={3}>
-                            <IcDown width={20} height={20} fill={COLORS.GRAYSCALE.GRAY_10} />
+                            <IcDown size={ICON_SIZE.S} fill={COLORS.GRAYSCALE.GRAY_10} />
                         </IconBox>
                     </Button>
                     <Options>

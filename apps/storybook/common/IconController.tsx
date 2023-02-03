@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import styled, { css } from 'styled-components'
-import { COLORS, ICON_SIZE, TIconSize, TYPOS } from 'ui'
+import { COLORS, ICON_SIZE, TYPOS } from 'ui'
 import { TSvgReactNode } from '../types/svg'
 import { flattenObject } from '../utils'
 import { Column, Row } from './Flex'
@@ -16,7 +16,7 @@ const DISPLAY_COLORS = flattenObject(COLORS, undefined, {
 })
 
 function IconController({ targetIcon: TargetIcon, name }: { targetIcon: TSvgReactNode; name: string }) {
-    const [size, setSize] = useState<TIconSize>(ICON_SIZE.S)
+    const [size, setSize] = useState<string>(Object.values(iconSizeList)[0])
     const [color, setColor] = useState<string>(COLORS.GRAYSCALE.GRAY_10)
 
     const { copy, copyText, isCopied } = useCopy({
@@ -37,11 +37,7 @@ function IconController({ targetIcon: TargetIcon, name }: { targetIcon: TSvgReac
         <ModalContainer>
             <Controllers>
                 <SelectBoxes>
-                    <SelectBox
-                        title={'Size'}
-                        list={iconSizeList}
-                        onSelect={(value) => setSize(ICON_SIZE[value as keyof typeof ICON_SIZE])}
-                    />
+                    <SelectBox title={'Size'} list={iconSizeList} onSelect={(value) => setSize(value)} />
                     <SelectBox
                         title={'Color'}
                         list={DISPLAY_COLORS}
@@ -57,17 +53,16 @@ function IconController({ targetIcon: TargetIcon, name }: { targetIcon: TSvgReac
                     <Code ref={$codeViewer}>
                         {`import {${name}} from 'ui'
                         
-                        <${name} width={${size.width}} height={${size.height}} fill={COLORS.${getKeyByValue(
-                            DISPLAY_COLORS,
-                            color,
-                        )}} />`}
+                        <${name} size={ICON_SIZE.${size}} fill={COLORS.${getKeyByValue(DISPLAY_COLORS, color)}} />`}
                     </Code>
                     <CopyButton onClick={handleCopy} isCopied={isCopied}>
                         {copyText}
                     </CopyButton>
                 </CodeView>
             </Controllers>
-            <Preview>{TargetIcon && <TargetIcon width={size.width} height={size.height} fill={color} />}</Preview>
+            <Preview>
+                {TargetIcon && <TargetIcon size={ICON_SIZE[size as keyof typeof ICON_SIZE]} fill={color} />}
+            </Preview>
         </ModalContainer>
     )
 }

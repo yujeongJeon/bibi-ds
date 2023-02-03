@@ -6,6 +6,7 @@ import { snakeToPascalString } from '../utils'
 import { createSettledResponse } from '../utils/promise'
 import { writeFile } from '../utils/file'
 import { getFigmaApi } from '../utils/getFigmaApi'
+import { svgTemplate } from '../templates/svgTemplate'
 
 const updateImportFile = (componentNames: string[]) =>
     componentNames.reduce((str, componentName, index) => {
@@ -42,11 +43,12 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
             typescript: true,
             memo: true,
             svgProps: {
-                width: '{props.width}',
-                height: '{props.height}',
+                width: '{props.size.width}',
+                height: '{props.size.height}',
             },
-            expandProps: 'start',
+            expandProps: false,
             replaceAttrValues: replaceFillProps(),
+            template: svgTemplate,
         },
         {
             componentName,

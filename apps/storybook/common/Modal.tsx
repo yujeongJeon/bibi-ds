@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
-import { COLORS, IcCancel } from 'ui'
+import { COLORS, IcCancel, ICON_SIZE } from 'ui'
 import usePortal from '../hooks/usePortal'
 import Overlay from './Overlay'
 import { Button } from './Button'
@@ -38,7 +38,7 @@ const getDataAttr = (element: HTMLElement, attributeName: string) => element.dat
 
 const CloseButton = ({ onClose }: Pick<HalfLayerWrapperProps, 'onClose'>) => (
     <ButtonWrapper type="button" onClick={onClose}>
-        <IcCancel width={24} height={24} fill={COLORS.GRAYSCALE.GRAY_10} />
+        <IcCancel size={ICON_SIZE.M} fill={COLORS.GRAYSCALE.GRAY_10} />
     </ButtonWrapper>
 )
 
