@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { COLORS, TYPOS } from 'ui'
 import { Column, InlineColumn, Row } from '../../common/Flex'
 import useCopy from '../../hooks/useCopy'
@@ -17,12 +17,24 @@ const Rectangle = styled.div<{ color: string }>`
     cursor: pointer;
 `
 
-const Text = styled.span<{ isCopied: boolean }>`
+const Text = styled.span<{ isCopied: boolean; isHover: boolean }>`
     ${TYPOS.PRETENDARD_CAPTION_MEDIUM}
     background-color: ${COLORS.GRAYSCALE['GRAY_0.1']};
     padding: 2.5px 6px;
     border-radius: 2px;
     color: ${({ isCopied }) => (isCopied ? COLORS.BRAND.MAINGREEN_DEFAULT : COLORS.GRAYSCALE.GRAY_10)};
+    transition: opacity 0.2s linear;
+    user-select: none;
+    ${({ isHover }) =>
+        isHover
+            ? css`
+                  opacity: 1;
+                  visibility: visible;
+              `
+            : css`
+                  opacity: 0;
+                  visibility: hidden;
+              `}
 `
 
 const COPY_TEXT = {
@@ -46,7 +58,11 @@ const ColorViewer = ({ color, tokenName }: { color: string; tokenName: string })
             onMouseLeave={() => handleMouseOver(false)}
             onClick={copyToken}
         >
-            {isShowTooltip && <Text isCopied={isCopied}>{copyText}</Text>}
+            {
+                <Text isCopied={isCopied} isHover={isShowTooltip}>
+                    {copyText}
+                </Text>
+            }
         </Rectangle>
     )
 }
