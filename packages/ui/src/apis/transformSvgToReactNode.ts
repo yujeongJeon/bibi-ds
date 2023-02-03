@@ -6,6 +6,7 @@ import path from 'path'
 import { snakeToPascalString } from '../utils'
 import { createSettledResponse } from '../utils/promise'
 import { writeFile } from '../utils/file'
+import { getFigmaApi } from '../utils/getFigmaApi'
 
 const ICON_PATH = path.resolve(__dirname, '../Foundation/icon/')
 
@@ -60,15 +61,15 @@ const transformSvgToReactNode = async (ids: Record<string, string>) => {
             throw new Error('figma access token이 없습니다. .env에 설정해주세요.')
         }
 
-        const res = await axios.get<TImageResponse>(`https://api.figma.com/v1/images/IjtwzoijQFoW2zEiO4N8BU`, {
+        const res = await getFigmaApi().get<TImageResponse>('/images/IjtwzoijQFoW2zEiO4N8BU', {
+            headers: {
+                'X-Figma-Token': FIGMA_TOKEN,
+            },
             params: {
                 ids: Object.keys(ids)
                     .map((id) => decodeURIComponent(id))
                     .join(','),
                 format: 'svg',
-            },
-            headers: {
-                'X-Figma-Token': FIGMA_TOKEN,
             },
         })
 
