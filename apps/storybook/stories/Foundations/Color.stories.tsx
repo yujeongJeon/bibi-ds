@@ -24,6 +24,7 @@ const Text = styled.span<{ isCopied: boolean; isHover: boolean }>`
     border-radius: 2px;
     color: ${({ isCopied }) => (isCopied ? COLORS.BRAND.MAINGREEN_DEFAULT : COLORS.GRAYSCALE.GRAY_10)};
     transition: opacity 0.2s linear;
+    user-select: none;
     ${({ isHover }) =>
         isHover
             ? css`

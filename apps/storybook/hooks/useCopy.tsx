@@ -50,9 +50,12 @@ const useCopy = ({ text, block = { duration: 3000 } }: TCopyArgs) => {
     return {
         copy: useCallback(
             (value: string) => {
+                if (status === CopyStatus.Pending) {
+                    return
+                }
                 copy(value)
             },
-            [copy],
+            [copy, status],
         ),
         copyText,
         isCopied: status === CopyStatus.Pending,
