@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import path from 'path'
 import getFileNode from './src/apis/getFileNode'
 import transformSvgToReactNode from './src/apis/transformSvgToReactNode'
 import updateJson from './src/apis/updateJson'
@@ -103,6 +104,8 @@ async function setIcon() {
         },
     })
 
+    const ICON_PATH = path.resolve(__dirname, './src/Foundation/icon/')
+
     // get icon
     await getFileNode({
         nodeId: ICON_NODE_ID,
@@ -112,7 +115,7 @@ async function setIcon() {
             )
 
             const ids = Object.fromEntries(components.map(({ id, name }) => [id, name]))
-            await transformSvgToReactNode(ids)
+            await transformSvgToReactNode(ids, { path: ICON_PATH })
         },
     })
 }

@@ -2,13 +2,10 @@ import axios from 'axios'
 import { FIGMA_TOKEN } from '../configs/figma'
 import { TImageResponse } from '../types/figma'
 import { transform } from '@svgr/core'
-import path from 'path'
 import { snakeToPascalString } from '../utils'
 import { createSettledResponse } from '../utils/promise'
 import { writeFile } from '../utils/file'
 import { getFigmaApi } from '../utils/getFigmaApi'
-
-const ICON_PATH = path.resolve(__dirname, '../Foundation/icon/')
 
 const updateImportFile = (componentNames: string[]) =>
     componentNames.reduce((str, componentName, index) => {
@@ -16,7 +13,7 @@ const updateImportFile = (componentNames: string[]) =>
         return `${str}${str ? '\n' + format : format}${index === componentNames.length - 1 ? '\n' : ''}`
     }, '')
 
-const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<string, string>) => {
+const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<string, string>, path: string) => {
     const res = await axios.get(url, {
         headers: {
             'X-Figma-Token': FIGMA_TOKEN,
@@ -48,14 +45,14 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
         },
         {
             componentName,
-            filePath: ICON_PATH,
+            filePath: path,
         },
     )
-    writeFile(jsCode, { name: `${componentName}.tsx`, path: ICON_PATH })
+    writeFile(jsCode, { name: `${componentName}.tsx`, path })
     return { key: componentName, status: 'OK' }
 }
 
-const transformSvgToReactNode = async (ids: Record<string, string>) => {
+const transformSvgToReactNode = async (ids: Record<string, string>, { path }: { path: string }) => {
     try {
         if (!FIGMA_TOKEN) {
             throw new Error('figma access token이 없습니다. .env에 설정해주세요.')
@@ -86,13 +83,14 @@ const transformSvgToReactNode = async (ids: Record<string, string>) => {
         const results = createSettledResponse(
             await Promise.allSettled(
                 Object.entries(images).map(async (image) => {
-                    const res = await transformSvgCode(image, ids)
+                    const res = await transformSvgCode(image, ids, path)
                     return { ...res }
                 }),
             ),
         )
 
-        writeFile(updateImportFile(Object.keys(results)), { name: 'index.ts', path: ICON_PATH })
+        const importFile = updateImportFile(Object.keys(results))
+        writeFile(importFile, { name: 'index.ts', path })
     } catch (error) {
         console.error(error)
         throw error
