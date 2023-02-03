@@ -134,6 +134,10 @@ const Rectangle = styled(Flex)`
     background-color: ${COLORS.BACKGROUND.SECONDARY};
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.2s linear;
+    &:hover {
+        background-color: ${COLORS.GRAYSCALE.GRAY_1};
+    }
 `
 
 const Total = styled(Row).attrs({
