@@ -13,6 +13,17 @@ const updateImportFile = (componentNames: string[]) =>
         return `${str}${str ? '\n' + format : format}${index === componentNames.length - 1 ? '\n' : ''}`
     }, '')
 
+/**
+ * @constant FILL_PROPS svgCode 에서 props.fill로 대체할 값들
+ */
+const FILL_PROPS = ['#121D2E', '#000', '#172E48', '#181600', '#D7DBE2'] as const
+
+type TFillProps = (typeof FILL_PROPS)[number]
+type TReplaceAttrProps = Record<TFillProps, '{props.fill}'>
+
+const replaceFillProps = (): TReplaceAttrProps =>
+    FILL_PROPS.reduce((obj, key) => ({ ...obj, [key]: '{props.fill}' }), {} as TReplaceAttrProps)
+
 const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<string, string>, path: string) => {
     const res = await axios.get(url, {
         headers: {
@@ -21,7 +32,7 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
         },
     })
     const svgCode = res.data
-    const componentName = `${snakeToPascalString(ids[imageId].replace(/[\-\s\!]+/gi, '_'))}`
+    const componentName = snakeToPascalString(ids[imageId].replace(/[\-\s\!]+/gi, '_'))
     const jsCode = await transform(
         svgCode,
         {
@@ -35,13 +46,7 @@ const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<st
                 height: '{props.height}',
             },
             expandProps: 'start',
-            replaceAttrValues: {
-                '#121D2E': '{props.fill}',
-                '#000': '{props.fill}',
-                '#172E48': '{props.fill}',
-                '#181600': '{props.fill}',
-                '#D7DBE2': '{props.fill}',
-            },
+            replaceAttrValues: replaceFillProps(),
         },
         {
             componentName,
