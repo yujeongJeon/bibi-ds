@@ -59,7 +59,7 @@ const Container = styled.div`
 `
 
 const Input = styled(Combobox.Input)<InputHTMLAttributes<HTMLInputElement>>`
-    ${TYPOS.PRETENDARD_HEAD3_BOLD}
+    ${TYPOS.PRETENDARD_BODY1_MEDIUM}
     height: 45px;
     border: 1px solid ${COLORS.BORDER.PRIMARY};
     width: calc(100% - 32px);

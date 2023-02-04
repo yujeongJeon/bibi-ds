@@ -27,7 +27,6 @@ const replaceFillProps = (): TReplaceAttrProps =>
 const transformSvgCode = async ([imageId, url]: [string, string], ids: Record<string, string>, path: string) => {
     const res = await axios.get(url, {
         headers: {
-            'X-Figma-Token': FIGMA_TOKEN,
             'Content-Type': 'text/html',
         },
     })
