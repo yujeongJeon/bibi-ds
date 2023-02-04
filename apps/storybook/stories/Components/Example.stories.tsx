@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { COLORS, TYPOS } from 'ui'
+import { COLORS, ICON_SIZE, IcProfile, TYPOS } from 'ui'
 import AutoSelectInput from '../../common/AutoSelectInput'
 import { Column, Row } from '../../common/Flex'
+import { IconBox } from '../../common/Icon'
 
 export const Example = () => {
     const [selectedNames, setSelectedName] = useState<string[]>([])
@@ -14,7 +15,16 @@ export const Example = () => {
         <Column>
             <Text>
                 {selectedNames.map((nickname) => (
-                    <Span key={nickname}>{nickname}</Span>
+                    <>
+                        <IconBox size={ICON_SIZE.S}>
+                            <IcProfile
+                                width={ICON_SIZE.S.width}
+                                height={ICON_SIZE.S.height}
+                                fill={COLORS.BRAND.MAINGREEN_DEFAULT}
+                            />
+                        </IconBox>
+                        <Span key={nickname}>{nickname}</Span>
+                    </>
                 ))}
             </Text>
             <AutoSelectInput list={list} onSearch={onSearch} placeholder={'내 닉네임 검색'} />
