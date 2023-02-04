@@ -1,4 +1,4 @@
-name: Storybook
+name: storybook
 on:
     push:
         branches:
@@ -6,6 +6,9 @@ on:
     workflow_dispatch:
 permissions:
     contents: write
+concurrency:
+    group: storybook
+    cancel-in-progress: true
 
 jobs:
     build-and-deploy:
