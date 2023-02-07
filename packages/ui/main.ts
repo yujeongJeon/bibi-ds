@@ -7,9 +7,9 @@ import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
 import { TIconDocumentFrame, TSizeGroup, TSizeReturnType } from './src/types/icon'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
-import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
-import { rgbaToHex } from './src/utils/color'
-import { isComponent, isFrame, isGroup, isText, isVector } from './src/utils/figma'
+import { toSnakeCaseBySeperator } from './src/utils'
+import { parseColor } from './src/utils/color'
+import { isComponent, isFrame, isGroup, isText } from './src/utils/figma'
 import { createSettledResponse, settle, TSetResponse } from './src/utils/promise'
 
 async function setColor() {
@@ -26,20 +26,7 @@ async function setColor() {
                 .reduce(
                     (root, { name: rootName, children }) => ({
                         ...root,
-                        [rootName.toUpperCase()]: children // {GRAYSCALE: {GRAY_10: '#121d2e', ...}, ...}
-                            .map(({ name, children }) => ({
-                                name: camelToSnakeCase(name, {
-                                    exclude: rootName,
-                                }).toUpperCase(),
-                                colors: children.filter(isVector)[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
-                            }))
-                            .reduce(
-                                (colorSet, { name, colors }) => ({
-                                    ...colorSet,
-                                    [name]: rgbaToHex(colors), // rgba -> hex로 변환
-                                }),
-                                {},
-                            ),
+                        [rootName.toUpperCase()]: parseColor(children, rootName),
                     }),
                     {} as TColorReturnType,
                 )
