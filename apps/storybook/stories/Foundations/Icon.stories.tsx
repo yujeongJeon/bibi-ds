@@ -233,6 +233,5 @@ export const Icon = () => {
 }
 
 export default {
-    title: "Bibi's Design System/Foundation/Icon",
     component: Icon,
 }

@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "test-storybook --coverage",
         "lint:fix": "eslint . --fix",
         "watch": "start-storybook -p 6006",
         "build": "build-storybook -o ../../docs",
@@ -21,18 +21,21 @@
     "devDependencies": {
         "@babel/core": "^7.20.12",
         "@storybook/addon-actions": "^6.5.16",
+        "@storybook/addon-coverage": "^0.0.8",
         "@storybook/addon-essentials": "^6.5.16",
         "@storybook/addon-interactions": "^6.5.16",
         "@storybook/addon-links": "^6.5.16",
         "@storybook/builder-webpack4": "^6.5.16",
         "@storybook/cli": "^6.5.16",
+        "@storybook/jest": "^0.0.10",
         "@storybook/manager-webpack4": "^6.5.16",
         "@storybook/react": "^6.5.16",
+        "@storybook/test-runner": "^0.9.4",
         "@storybook/testing-library": "^0.0.13",
         "@types/styled-components": "^5.1.26",
         "babel-loader": "^8.3.0",
         "react-docgen-typescript": "^2.2.2",
-        "storybook": "^6.5.16",
+        "storybook": "^7.0.0-beta.43",
         "styled-components": "^5.3.6"
     }
 }

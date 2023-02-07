@@ -7,10 +7,14 @@ function AutoSelectInput({
     list,
     onSearch,
     placeholder,
+    inputId = '',
+    ...inputAttrs
 }: {
     list: string[]
     onSearch(items: string[]): void
     placeholder?: string
+    inputId?: string
+    ['data-testid']?: string
 }) {
     const [selectedItem, setSelectedItem] = useState('')
     const [searchWord, setSearchWord] = useState('')
@@ -40,10 +44,12 @@ function AutoSelectInput({
                     onChange={(event) => setSearchWord(event.target.value)}
                     autoComplete="off"
                     placeholder={placeholder}
+                    id={inputId}
+                    {...inputAttrs}
                 />
                 <OptionBox>
                     {filteredItems.map((item) => (
-                        <Combobox.Option key={item} value={item}>
+                        <Combobox.Option key={item} value={item} itemID={`${inputId || 'input'}-option-${item}`}>
                             <Option>{item}</Option>
                         </Combobox.Option>
                     ))}
