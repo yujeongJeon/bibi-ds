@@ -5,13 +5,12 @@ import transformSvgToReactNode from './src/apis/transformSvgToReactNode'
 import updateJson from './src/apis/updateJson'
 import { COLOR_NODE_ID, ICON_NODE_ID, TYPO_NODE_ID } from './src/configs/figma'
 import { TColorSetFrame, TColorReturnType, TColorDocumentFrame } from './src/types/color'
-import { IComponent, IText } from './src/types/figma'
 import { TIconDocumentFrame, TSizeGroup, TSizeReturnType } from './src/types/icon'
 import { TTypoDocumentFrame, TTypoFrame, TUsageFrame } from './src/types/typo'
 import { camelToSnakeCase, toSnakeCaseBySeperator } from './src/utils'
 import { rgbaToHex } from './src/utils/color'
-import { isComponent, isFrame, isGroup } from './src/utils/figma'
-import { createSettledResponse } from './src/utils/promise'
+import { isComponent, isFrame, isGroup, isText, isVector } from './src/utils/figma'
+import { createSettledResponse, settle, TSetResponse } from './src/utils/promise'
 
 async function setColor() {
     await updateJson({
@@ -32,7 +31,7 @@ async function setColor() {
                                 name: camelToSnakeCase(name, {
                                     exclude: rootName,
                                 }).toUpperCase(),
-                                colors: children.filter((child) => child.type === 'VECTOR')[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
+                                colors: children.filter(isVector)[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
                             }))
                             .reduce(
                                 (colorSet, { name, colors }) => ({
@@ -61,9 +60,7 @@ async function setTypo() {
             return usage.filter<TTypoFrame>(isFrame).reduce(
                 (obj, { name, children }) => ({
                     ...obj,
-                    [toSnakeCaseBySeperator(name)]: children.filter<IText>(
-                        (child): child is IText => child.type === 'TEXT',
-                    )[0].style,
+                    [toSnakeCaseBySeperator(name)]: children.filter(isText)[0].style,
                 }),
                 {},
             )
@@ -110,9 +107,7 @@ async function setIcon() {
     await getFileNode({
         nodeId: ICON_NODE_ID,
         async transform(document: TIconDocumentFrame) {
-            const components = document.children.filter<IComponent>((child): child is IComponent =>
-                isComponent<IComponent>(child),
-            )
+            const components = document.children.filter(isComponent)
 
             const ids = Object.fromEntries(components.map(({ id, name }) => [id, name]))
             await transformSvgToReactNode(ids, { path: ICON_PATH })
@@ -120,24 +115,9 @@ async function setIcon() {
     })
 }
 
-type TSetResponse = {
-    key: string
-    status: 'OK' | 'ERROR'
-}
-
 async function main() {
     const results = createSettledResponse<TSetResponse, 'color' | 'typo' | 'icon'>(
-        await Promise.allSettled([
-            setColor()
-                .then((): TSetResponse => ({ status: 'OK', key: 'color' } as TSetResponse))
-                .catch((): TSetResponse => ({ status: 'ERROR', key: 'color' } as TSetResponse)),
-            setTypo()
-                .then(() => ({ status: 'OK', key: 'typo' } as TSetResponse))
-                .catch(() => ({ status: 'ERROR', key: 'typo' } as TSetResponse)),
-            setIcon()
-                .then(() => ({ status: 'OK', key: 'icon' } as TSetResponse))
-                .catch(() => ({ status: 'ERROR', key: 'icon' } as TSetResponse)),
-        ]),
+        await Promise.allSettled([settle(setColor, 'color'), settle(setTypo, 'typo'), settle(setIcon, 'icon')]),
     )
 
     Object.entries(results).forEach(([key, status]) =>
