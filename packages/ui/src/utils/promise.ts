@@ -11,3 +11,13 @@ export const createSettledResponse = <T extends { [key in string]: string }, K e
         return { ...result, [key]: status }
     }, {} as Record<string, string>)
 }
+
+export type TSetResponse = {
+    key: string
+    status: 'OK' | 'ERROR'
+}
+
+export const settle = (fn: () => Promise<void>, key: string) =>
+    fn()
+        .then((): TSetResponse => ({ status: 'OK', key } as TSetResponse))
+        .catch((): TSetResponse => ({ status: 'ERROR', key } as TSetResponse))
