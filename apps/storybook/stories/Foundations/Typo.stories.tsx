@@ -173,6 +173,5 @@ export const Typo = () => {
 }
 
 export default {
-    title: "Bibi's Design System/Foundation/Typo",
     component: Typo,
 }

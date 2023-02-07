@@ -13,7 +13,8 @@
         "lint": "turbo run lint --parallel",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "start:ui": "turbo run start --parallel --filter=ui --include-dependencies",
-        "watch:storybook": "turbo run watch --filter=storybook --include-dependencies"
+        "watch:storybook": "turbo run watch --filter=storybook --include-dependencies",
+        "test": "turbo run test --filter=storybook"
     },
     "devDependencies": {
         "@headlessui/react": "^1.7.8",

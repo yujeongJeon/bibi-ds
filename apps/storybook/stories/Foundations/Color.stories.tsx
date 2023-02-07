@@ -121,6 +121,5 @@ export const Color = () => (
 )
 
 export default {
-    title: "Bibi's Design System/Foundation/Color",
     component: Color,
 }

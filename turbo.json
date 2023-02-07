@@ -17,6 +17,7 @@
         "watch": {
             "cache": false
         },
-        "init": {}
+        "init": {},
+        "test": {}
     }
 }
